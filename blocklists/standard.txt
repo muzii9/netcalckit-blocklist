@@ -1,0 +1,3 @@
+# NetCalcKit Standard DNS Blocklist
+# Status: intentionally empty pending source and license review.
+# Format: one lowercase domain per line.

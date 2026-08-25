@@ -1,0 +1,3 @@
+# Approved upstream blocklist URLs
+# Intentionally empty pending source and license review.
+# Add one HTTPS URL per line only after approval.

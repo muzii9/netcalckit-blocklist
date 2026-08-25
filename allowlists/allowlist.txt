@@ -1,0 +1,2 @@
+# NetCalcKit allowlist
+# Add one reviewed lowercase domain per line.
