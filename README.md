@@ -2,7 +2,7 @@
 
 An independently curated, open-source DNS blocklist for reducing ads, trackers, and telemetry at the DNS level.
 
-> **Status:** Alpha development after v0.1.0-alpha. The standard list currently contains 13 independently reviewed analytics and telemetry hostnames. NetCalcKit does not rebrand or republish third-party aggregate blocklists.
+> **Status:** v0.2.0-alpha is published as a prerelease. The standard list contains 13 independently reviewed analytics and telemetry hostnames. NetCalcKit does not rebrand or republish third-party aggregate blocklists.
 
 ## Subscribe
 
@@ -12,10 +12,10 @@ For ongoing alpha updates, use:
 https://raw.githubusercontent.com/muzii9/netcalckit-blocklist/main/blocklists/standard.txt
 ```
 
-For the immutable seven-rule `v0.1.0-alpha` snapshot, use:
+For the immutable 13-rule `v0.2.0-alpha` snapshot, use:
 
 ```text
-https://raw.githubusercontent.com/muzii9/netcalckit-blocklist/v0.1.0-alpha/blocklists/standard.txt
+https://raw.githubusercontent.com/muzii9/netcalckit-blocklist/v0.2.0-alpha/blocklists/standard.txt
 ```
 
 The moving `main` list includes post-release alpha work. Review the testing documents and report any broken essential functionality through the false-positive issue form.

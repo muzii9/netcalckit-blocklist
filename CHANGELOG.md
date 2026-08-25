@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+No unreleased changes yet.
+
+## v0.2.0-alpha — 2026-08-25
+
 ### Added
 
 - Automatic GitHub Actions validation on pushes, pull requests, and manual runs.

@@ -1,6 +1,6 @@
 # v0.2.0-alpha release candidate
 
-Target date: 2026-08-25
+Published: 2026-08-25
 
 This candidate freezes the current 13-rule independently curated alpha list. It does not claim universal application compatibility.
 
@@ -26,16 +26,14 @@ This candidate freezes the current 13-rule independently curated alpha list. It 
 - [x] Licensing scope is documented locally.
 - [x] False-positive reporting and rollback instructions are available.
 - [x] Application-test limitations are disclosed.
-- [ ] Create immutable `v0.2.0-alpha` tag from the final verified release commit.
-- [ ] Publish the GitHub prerelease and verify its raw subscription URL.
+- [x] Create immutable `v0.2.0-alpha` tag from the final verified release commit.
+- [x] Publish the GitHub prerelease and verify its raw subscription URL.
 
-## Planned immutable subscription
+## Immutable subscription
 
 ```text
 https://raw.githubusercontent.com/muzii9/netcalckit-blocklist/v0.2.0-alpha/blocklists/standard.txt
 ```
-
-Do not use this URL until the tag has been published.
 
 ## Draft release notes
 
