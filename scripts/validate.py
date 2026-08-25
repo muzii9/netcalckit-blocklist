@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2026 NetCalcKit contributors
-"""Validate NetCalcKit blocklist and allowlist files."""
+"""Validate NetCalcKit source, blocklist, and allowlist files."""
 
 from __future__ import annotations
 
@@ -12,7 +12,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 BLOCKLIST = ROOT / "blocklists" / "standard.txt"
 ALLOWLIST = ROOT / "allowlists" / "allowlist.txt"
-FILES = (BLOCKLIST, ALLOWLIST)
+CURATED = ROOT / "sources" / "curated.txt"
+FILES = (BLOCKLIST, ALLOWLIST, CURATED)
 DOMAIN = re.compile(
     r"(?=^.{1,253}$)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+"
     r"[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$"
@@ -42,9 +43,18 @@ def main() -> int:
         if len(entries) != len(set(entries)):
             errors.append(f"{relative}: duplicate rules found")
 
-    overlap = sorted(set(rules(BLOCKLIST)) & set(rules(ALLOWLIST)))
+    blocklist = rules(BLOCKLIST)
+    allowlist = set(rules(ALLOWLIST))
+    overlap = sorted(set(blocklist) & allowlist)
     if overlap:
         errors.append(f"blocklist/allowlist overlap: {', '.join(overlap)}")
+
+    expected = sorted(set(rules(CURATED)) - allowlist)
+    if blocklist != expected:
+        errors.append(
+            "blocklists/standard.txt is not reproducible from "
+            "sources/curated.txt minus allowlists/allowlist.txt; run scripts/build.py"
+        )
 
     if errors:
         for error in errors:

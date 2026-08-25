@@ -2,5 +2,12 @@
 # SPDX-License-Identifier: ODbL-1.0
 # Copyright (c) 2026 NetCalcKit contributors
 # Attribution: https://github.com/muzii9/netcalckit-blocklist
-# Status: intentionally empty pending independent domain review.
+# Generated from independently reviewed NetCalcKit entries.
 # Format: one lowercase domain per line.
+api.eu.amplitude.com
+api2.amplitude.com
+region1.google-analytics.com
+script.hotjar.com
+static.hotjar.com
+www.clarity.ms
+www.google-analytics.com
