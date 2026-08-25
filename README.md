@@ -6,10 +6,16 @@ An independently curated, open-source DNS blocklist for reducing ads, trackers, 
 
 ## Subscribe
 
-Use this URL in a DNS blocker that accepts one-domain-per-line lists:
+For ongoing alpha updates, use:
 
 ```text
 https://raw.githubusercontent.com/muzii9/netcalckit-blocklist/main/blocklists/standard.txt
+```
+
+For the immutable `v0.1.0-alpha` snapshot, use:
+
+```text
+https://raw.githubusercontent.com/muzii9/netcalckit-blocklist/v0.1.0-alpha/blocklists/standard.txt
 ```
 
 This is an alpha list. Review `docs/alpha-testing.md` and report any broken essential functionality through the false-positive issue form.
@@ -25,6 +31,7 @@ This is an alpha list. Review `docs/alpha-testing.md` and report any broken esse
 - `docs/alpha-testing.md` — alpha release smoke-test record
 - `scripts/build.py` — deterministic blocklist builder
 - `scripts/validate.py` — format, ordering, duplicate, overlap, and reproducibility checks
+- `.github/workflows/validate.yml` — automatic validation for pushes and pull requests
 - `CONTRIBUTING.md` — contribution guidelines
 - `CHANGELOG.md` — project history
 

@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Added
+
+- Automatic GitHub Actions validation on pushes, pull requests, and manual runs.
+- Immutable subscription URL for the v0.1.0-alpha snapshot.
+
 ## v0.1.0-alpha — 2026-08-25
 
 ### Added
