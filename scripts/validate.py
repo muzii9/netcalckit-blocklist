@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2026 NetCalcKit contributors
 """Validate NetCalcKit blocklist and allowlist files."""
 
 from __future__ import annotations

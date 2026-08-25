@@ -1,3 +1,6 @@
 # NetCalcKit Standard DNS Blocklist
-# Status: intentionally empty pending source and license review.
+# SPDX-License-Identifier: ODbL-1.0
+# Copyright (c) 2026 NetCalcKit contributors
+# Attribution: https://github.com/muzii9/netcalckit-blocklist
+# Status: intentionally empty pending independent domain review.
 # Format: one lowercase domain per line.

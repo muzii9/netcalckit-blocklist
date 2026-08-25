@@ -15,10 +15,11 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+- Adopted ODbL 1.0/DbCL 1.0 for blocklist data, MIT for scripts, and CC BY 4.0 for documentation.
+
 - Adopted an original-curation model instead of ingesting third-party aggregate blocklists.
 - Updated the build pipeline to use only independently reviewed NetCalcKit domains.
 
 ### Notes
 
 - No third-party blocklist sources are included.
-- No project license has been selected.

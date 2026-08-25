@@ -1,3 +1,5 @@
 # Independently reviewed NetCalcKit domains
+# SPDX-License-Identifier: ODbL-1.0
+# Copyright (c) 2026 NetCalcKit contributors
 # Add one lowercase domain per line only after the evidence requirements
 # in docs/domain-policy.md have been satisfied.

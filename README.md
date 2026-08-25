@@ -31,6 +31,12 @@ A domain is not added merely because another blocklist contains it. A proposed r
 
 Approved domains are recorded in `sources/curated.txt`. The builder normalizes them, removes allowlisted entries, sorts the result, and writes `blocklists/standard.txt`.
 
-## License
+## Licensing
 
-No license has been selected yet. The project will choose a license for its independently curated data and scripts before the first public release.
+This is a multi-license repository:
+
+- Curated-domain database, blocklists, and allowlist: **ODbL 1.0**, with individual contents under **DbCL 1.0**
+- Python scripts: **MIT**
+- Documentation: **CC BY 4.0**
+
+See `LICENSE.md` for the exact scope, attribution notice, local legal texts, and trademark reservation.
