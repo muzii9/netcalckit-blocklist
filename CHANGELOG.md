@@ -13,6 +13,14 @@ All notable changes to this project will be documented in this file.
 - Second independently researched batch with six exact New Relic and Datadog browser telemetry hosts.
 - Official-vendor evidence and two-environment network verification for every second-batch rule.
 - Successful AdGuard Home subscription refresh and enforcement verification for all 13 current rules.
+- Verified AdGuard Home installation, verification, troubleshooting, and rollback guide.
+- Application-level false-positive testing protocol and severity model.
+- Platform support matrix separating verified support from pending research.
+
+### Changed
+
+- Clarified that DNS enforcement testing does not constitute universal application compatibility.
+- Withheld unverified Pi-hole, NextDNS, and Control D instructions until authoritative review and direct testing are complete.
 
 ## v0.1.0-alpha — 2026-08-25
 

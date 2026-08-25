@@ -22,7 +22,14 @@ The moving `main` list includes post-release alpha work. Review the testing docu
 
 ## Compatibility
 
-The current 13-rule list was loaded as the only active custom filter in an isolated AdGuard Home v0.107.79 instance. All 13 listed domains were blocked, the subscription refreshed successfully, and an unrelated control domain resolved normally. See `docs/adguard-home-testing.md` for the exact environment and results.
+The current 13-rule list was loaded as the only active custom filter in an isolated AdGuard Home v0.107.79 instance. All 13 listed domains were blocked, the subscription refreshed successfully, and an unrelated control domain resolved normally. This verifies DNS enforcement, not universal app compatibility.
+
+- [Install in AdGuard Home](docs/install-adguard-home.md)
+- [False-positive testing protocol](docs/false-positive-testing.md)
+- [Platform support status](docs/platform-support.md)
+- [AdGuard Home test record](docs/adguard-home-testing.md)
+
+Guides for Pi-hole, NextDNS, and Control D are intentionally withheld until each platform is verified from authoritative documentation and direct testing.
 
 ## Repository structure
 
@@ -35,6 +42,9 @@ The current 13-rule list was loaded as the only active custom filter in an isola
 - `docs/domain-policy.md` — evidence and review requirements
 - `docs/alpha-testing.md` — alpha release smoke-test record
 - `docs/adguard-home-testing.md` — isolated AdGuard Home enforcement test
+- `docs/install-adguard-home.md` — verified AdGuard Home installation and rollback guide
+- `docs/false-positive-testing.md` — application-level false-positive protocol
+- `docs/platform-support.md` — verified and pending platform status
 - `scripts/build.py` — deterministic blocklist builder
 - `scripts/validate.py` — format, ordering, duplicate, overlap, and reproducibility checks
 - `.github/workflows/validate.yml` — automatic validation for pushes and pull requests
