@@ -5,8 +5,9 @@
 
 from __future__ import annotations
 
-import ipaddress
 from pathlib import Path
+
+from domain_utils import load_domains
 
 ROOT = Path(__file__).resolve().parents[1]
 CURATED = ROOT / "sources" / "curated.txt"
@@ -22,61 +23,13 @@ HEADER = (
 )
 
 
-def active_lines(path: Path) -> list[str]:
-    return [
-        line.strip()
-        for line in path.read_text(encoding="utf-8").splitlines()
-        if line.strip() and not line.lstrip().startswith(("#", "!", "["))
-    ]
-
-
-def normalize_domain(line: str) -> str | None:
-    value = line.split("#", 1)[0].strip().lower().rstrip(".")
-    parts = value.split()
-
-    if len(parts) == 2 and parts[0] in {"0.0.0.0", "127.0.0.1"}:
-        value = parts[1].rstrip(".")
-    elif len(parts) != 1:
-        return None
-
-    if value == "localhost":
-        return None
-
-    try:
-        ipaddress.ip_address(value)
-        return None
-    except ValueError:
-        pass
-
-    labels = value.split(".")
-    if (
-        len(value) > 253
-        or len(labels) < 2
-        or any(
-            not label
-            or len(label) > 63
-            or label.startswith("-")
-            or label.endswith("-")
-            or not all(character.isalnum() or character == "-" for character in label)
-            for label in labels
-        )
-    ):
-        return None
-
-    return value
-
-
 def main() -> None:
-    allowlisted = {
-        domain
-        for line in active_lines(ALLOWLIST)
-        if (domain := normalize_domain(line))
-    }
-    curated = {
-        domain
-        for line in active_lines(CURATED)
-        if (domain := normalize_domain(line))
-    }
+    try:
+        allowlisted = set(load_domains(ALLOWLIST))
+        curated = set(load_domains(CURATED))
+    except ValueError as error:
+        raise SystemExit(f"ERROR: {error}") from error
+
     domains = sorted(curated - allowlisted)
 
     body = "\n".join(domains)

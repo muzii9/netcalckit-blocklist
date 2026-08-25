@@ -49,8 +49,11 @@ Guides for Pi-hole, NextDNS, and Control D are intentionally withheld until each
 - `docs/false-positive-testing.md` — application-level false-positive protocol
 - `docs/application-testing.md` — controlled app-test results and rule coverage
 - `docs/platform-support.md` — verified and pending platform status
+- `docs/stable-release-criteria.md` — mandatory gates for a non-prerelease version
+- `scripts/domain_utils.py` — shared strict domain-file parser
 - `scripts/build.py` — deterministic blocklist builder
 - `scripts/validate.py` — format, ordering, duplicate, overlap, and reproducibility checks
+- `tests/test_domain_utils.py` — parser and malformed-input unit tests
 - `.github/workflows/validate.yml` — automatic validation for pushes and pull requests
 - `CONTRIBUTING.md` — contribution guidelines
 - `CHANGELOG.md` — project history

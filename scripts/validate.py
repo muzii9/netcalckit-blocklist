@@ -5,51 +5,43 @@
 
 from __future__ import annotations
 
-import re
 import sys
 from pathlib import Path
+
+from build import HEADER
+from domain_utils import load_domains
 
 ROOT = Path(__file__).resolve().parents[1]
 BLOCKLIST = ROOT / "blocklists" / "standard.txt"
 ALLOWLIST = ROOT / "allowlists" / "allowlist.txt"
 CURATED = ROOT / "sources" / "curated.txt"
 FILES = (BLOCKLIST, ALLOWLIST, CURATED)
-DOMAIN = re.compile(
-    r"(?=^.{1,253}$)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+"
-    r"[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$"
-)
-
-
-def rules(path: Path) -> list[str]:
-    return [
-        line.strip()
-        for line in path.read_text(encoding="utf-8").splitlines()
-        if line.strip() and not line.lstrip().startswith(("#", "!", "["))
-    ]
 
 
 def main() -> int:
     errors: list[str] = []
 
+    loaded: dict[Path, list[str]] = {}
     for path in FILES:
-        entries = rules(path)
-        relative = path.relative_to(ROOT)
+        try:
+            loaded[path] = load_domains(path)
+        except ValueError as error:
+            errors.append(str(error).replace(str(ROOT) + "/", ""))
+            loaded[path] = []
 
-        invalid = [entry for entry in entries if not DOMAIN.fullmatch(entry)]
-        if invalid:
-            errors.append(f"{relative}: invalid domain rule(s): {', '.join(invalid)}")
-        if entries != sorted(entries):
-            errors.append(f"{relative}: rules are not sorted")
-        if len(entries) != len(set(entries)):
-            errors.append(f"{relative}: duplicate rules found")
+    blocklist_text = BLOCKLIST.read_text(encoding="utf-8")
+    if not blocklist_text.startswith(HEADER):
+        errors.append("blocklists/standard.txt: missing or stale generated header")
+    if blocklist_text and not blocklist_text.endswith("\n"):
+        errors.append("blocklists/standard.txt: missing final newline")
 
-    blocklist = rules(BLOCKLIST)
-    allowlist = set(rules(ALLOWLIST))
+    blocklist = loaded[BLOCKLIST]
+    allowlist = set(loaded[ALLOWLIST])
     overlap = sorted(set(blocklist) & allowlist)
     if overlap:
         errors.append(f"blocklist/allowlist overlap: {', '.join(overlap)}")
 
-    expected = sorted(set(rules(CURATED)) - allowlist)
+    expected = sorted(set(loaded[CURATED]) - allowlist)
     if blocklist != expected:
         errors.append(
             "blocklists/standard.txt is not reproducible from "

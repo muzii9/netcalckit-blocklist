@@ -17,13 +17,20 @@ All notable changes to this project will be documented in this file.
 - Application-level false-positive testing protocol and severity model.
 - Platform support matrix separating verified support from pending research.
 - First controlled browser comparison of NetCalcKit core page, calculator, and tool-search behavior.
-- Vendor-owned public-page comparison exercising six current rules; four received preliminary core-render passes and two received render-only evidence.\n- Official testability review for seven account-, region-, or resource-specific rules that remain unexercised.\n- v0.2.0-alpha release-candidate checklist and draft release notes.
+- Vendor-owned public-page comparison exercising six current rules; four received preliminary core-render passes and two received render-only evidence.
+- Official testability review for seven account-, region-, or resource-specific rules that remain unexercised.
+- v0.2.0-alpha release-candidate checklist and draft release notes.
+- Strict shared domain parser with fail-fast handling for malformed, duplicate, unsorted, hosts-format, inline-comment, and IP-address entries.
+- Unit tests for accepted input and seven parser failure modes.
+- Local DbCL 1.0 legal text and stable-release criteria.
 
 ### Changed
 
 - Clarified that DNS enforcement testing does not constitute universal application compatibility.
 - Withheld unverified Pi-hole, NextDNS, and Control D instructions until authoritative review and direct testing are complete.
-- Kept rule-level classifications narrow when a page or test metric did not provide sufficient evidence.\n- Defined real-account or reproducible community evidence as the promotion requirement for specialized regional collectors.
+- Kept rule-level classifications narrow when a page or test metric did not provide sufficient evidence.
+- Defined real-account or reproducible community evidence as the promotion requirement for specialized regional collectors.
+- Hardened the builder and validator to use the same parser and verify the generated header and final newline.
 
 ## v0.1.0-alpha — 2026-08-25
 

@@ -31,6 +31,9 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
+      - name: Run pipeline unit tests
+        run: python3 -m unittest discover -s tests -v
+
       - name: Rebuild blocklist
         run: python3 scripts/build.py
 
