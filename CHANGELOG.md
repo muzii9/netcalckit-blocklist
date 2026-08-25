@@ -23,6 +23,8 @@ All notable changes to this project will be documented in this file.
 - Strict shared domain parser with fail-fast handling for malformed, duplicate, unsorted, hosts-format, inline-comment, and IP-address entries.
 - Unit tests for accepted input and seven parser failure modes.
 - Local DbCL 1.0 legal text and stable-release criteria.
+- Isolated Pi-hole Core v6.4.3 Gravity and DNS enforcement test for all 13 rules.
+- Verified Pi-hole installation, verification, and rollback guide.
 
 ### Changed
 

@@ -13,13 +13,13 @@ NetCalcKit uses **alpha** for early evidence-backed rules, **release candidate**
 - [x] All rules pass isolated AdGuard Home enforcement with a normal control domain.
 - [x] All current hosts resolve and reach their dedicated HTTPS services from two independent environments.
 - [ ] Every rule has representative application-level evidence, or a documented equivalent review approved for the stable scope.
-- [ ] The subscription is enforced successfully on a second supported DNS filtering platform.
+- [x] The subscription is enforced successfully on a second supported DNS filtering platform.
 - [ ] A frozen release candidate completes a public alpha soak period without an unresolved critical or high-severity false positive.
 - [ ] Stable installation, rollback, support scope, and immutable subscription documentation are finalized.
 
 ## Current assessment
 
-The 13-rule candidate is technically valid and suitable for alpha testing. Six rules have limited public-page application evidence; seven specialized regional or account-specific rules remain unexercised. AdGuard Home is the only directly verified consumer platform. The project therefore does not yet meet its own stable-release gates.
+The 13-rule candidate is technically valid and suitable for alpha testing. Six rules have limited public-page application evidence; seven specialized regional or account-specific rules remain unexercised. AdGuard Home and Pi-hole are directly verified consumer platforms. The project therefore does not yet meet its own stable-release gates.
 
 ## Promotion rule
 

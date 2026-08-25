@@ -26,13 +26,17 @@ The current 13-rule list was loaded as the only active custom filter in an isola
 
 Controlled browser comparisons have now exercised six current rules on vendor-owned public pages. Four received a preliminary core-render smoke pass, two have render-only evidence, and seven remain unexercised. These are narrow alpha results, not universal compatibility clearance.
 
+The complete 13-rule subscription has been parsed and enforced successfully in isolated AdGuard Home and Pi-hole environments, each with an unrelated control domain resolving normally.
+
 - [Install in AdGuard Home](docs/install-adguard-home.md)
+- [Install in Pi-hole](docs/install-pihole.md)
 - [False-positive testing protocol](docs/false-positive-testing.md)
 - [Application compatibility test record](docs/application-testing.md)
 - [Platform support status](docs/platform-support.md)
 - [AdGuard Home test record](docs/adguard-home-testing.md)
+- [Pi-hole test record](docs/pihole-testing.md)
 
-Guides for Pi-hole, NextDNS, and Control D are intentionally withheld until each platform is verified from authoritative documentation and direct testing.
+Guides for NextDNS and Control D are intentionally withheld until each platform is verified from authoritative documentation and direct testing.
 
 ## Repository structure
 
@@ -46,9 +50,11 @@ Guides for Pi-hole, NextDNS, and Control D are intentionally withheld until each
 - `docs/alpha-testing.md` — alpha release smoke-test record
 - `docs/adguard-home-testing.md` — isolated AdGuard Home enforcement test
 - `docs/install-adguard-home.md` — verified AdGuard Home installation and rollback guide
+- `docs/install-pihole.md` — verified Pi-hole installation and rollback guide
 - `docs/false-positive-testing.md` — application-level false-positive protocol
 - `docs/application-testing.md` — controlled app-test results and rule coverage
 - `docs/platform-support.md` — verified and pending platform status
+- `docs/pihole-testing.md` — isolated Pi-hole Gravity and enforcement test
 - `docs/stable-release-criteria.md` — mandatory gates for a non-prerelease version
 - `scripts/domain_utils.py` — shared strict domain-file parser
 - `scripts/build.py` — deterministic blocklist builder
