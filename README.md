@@ -26,10 +26,11 @@ The current 13-rule list was loaded as the only active custom filter in an isola
 
 - [Install in AdGuard Home](docs/install-adguard-home.md)
 - [False-positive testing protocol](docs/false-positive-testing.md)
+- [Application compatibility test record](docs/application-testing.md)
 - [Platform support status](docs/platform-support.md)
 - [AdGuard Home test record](docs/adguard-home-testing.md)
 
-Guides for Pi-hole, NextDNS, and Control D are intentionally withheld until each platform is verified from authoritative documentation and direct testing.
+The first controlled website comparison passed its core-function checks, but the page did not request any current list hostname during that run; consequently, no individual rule has been marked application-cleared. Guides for Pi-hole, NextDNS, and Control D are intentionally withheld until each platform is verified from authoritative documentation and direct testing.
 
 ## Repository structure
 
@@ -44,6 +45,7 @@ Guides for Pi-hole, NextDNS, and Control D are intentionally withheld until each
 - `docs/adguard-home-testing.md` — isolated AdGuard Home enforcement test
 - `docs/install-adguard-home.md` — verified AdGuard Home installation and rollback guide
 - `docs/false-positive-testing.md` — application-level false-positive protocol
+- `docs/application-testing.md` — controlled app-test results and rule coverage
 - `docs/platform-support.md` — verified and pending platform status
 - `scripts/build.py` — deterministic blocklist builder
 - `scripts/validate.py` — format, ordering, duplicate, overlap, and reproducibility checks

@@ -16,11 +16,13 @@ All notable changes to this project will be documented in this file.
 - Verified AdGuard Home installation, verification, troubleshooting, and rollback guide.
 - Application-level false-positive testing protocol and severity model.
 - Platform support matrix separating verified support from pending research.
+- First controlled browser comparison of NetCalcKit core page, calculator, and tool-search behavior.
 
 ### Changed
 
 - Clarified that DNS enforcement testing does not constitute universal application compatibility.
 - Withheld unverified Pi-hole, NextDNS, and Control D instructions until authoritative review and direct testing are complete.
+- Recorded zero rule-level application clearances when the test page did not exercise a current list hostname.
 
 ## v0.1.0-alpha — 2026-08-25
 
