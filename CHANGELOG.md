@@ -17,7 +17,7 @@ All notable changes to this project will be documented in this file.
 - Application-level false-positive testing protocol and severity model.
 - Platform support matrix separating verified support from pending research.
 - First controlled browser comparison of NetCalcKit core page, calculator, and tool-search behavior.
-- Vendor-owned public-page comparison exercising six current rules; four received preliminary core-render passes and two received render-only evidence.\n- Official testability review for seven account-, region-, or resource-specific rules that remain unexercised.
+- Vendor-owned public-page comparison exercising six current rules; four received preliminary core-render passes and two received render-only evidence.\n- Official testability review for seven account-, region-, or resource-specific rules that remain unexercised.\n- v0.2.0-alpha release-candidate checklist and draft release notes.
 
 ### Changed
 
