@@ -2,7 +2,7 @@
 
 An independently curated, open-source DNS blocklist for reducing ads, trackers, and telemetry at the DNS level.
 
-> **Status:** v0.1.0-alpha. The standard list currently contains 7 independently reviewed analytics and telemetry hostnames. NetCalcKit does not rebrand or republish third-party aggregate blocklists.
+> **Status:** Alpha development after v0.1.0-alpha. The standard list currently contains 13 independently reviewed analytics and telemetry hostnames. NetCalcKit does not rebrand or republish third-party aggregate blocklists.
 
 ## Subscribe
 
@@ -12,17 +12,17 @@ For ongoing alpha updates, use:
 https://raw.githubusercontent.com/muzii9/netcalckit-blocklist/main/blocklists/standard.txt
 ```
 
-For the immutable `v0.1.0-alpha` snapshot, use:
+For the immutable seven-rule `v0.1.0-alpha` snapshot, use:
 
 ```text
 https://raw.githubusercontent.com/muzii9/netcalckit-blocklist/v0.1.0-alpha/blocklists/standard.txt
 ```
 
-This is an alpha list. Review `docs/alpha-testing.md` and report any broken essential functionality through the false-positive issue form.
+The moving `main` list includes post-release alpha work. Review the testing documents and report any broken essential functionality through the false-positive issue form.
 
 ## Compatibility
 
-The current list has been loaded as the only active custom filter in an isolated AdGuard Home v0.107.79 instance. All seven listed domains were blocked and an unrelated control domain resolved normally. See `docs/adguard-home-testing.md` for the exact environment and results.
+The first seven-rule batch was loaded as the only active custom filter in an isolated AdGuard Home v0.107.79 instance. All listed domains were blocked and an unrelated control domain resolved normally. See `docs/adguard-home-testing.md` for the exact environment and results. The six-rule second batch is being tested through the same isolated process.
 
 ## Repository structure
 
@@ -31,6 +31,7 @@ The current list has been loaded as the only active custom filter in an isolated
 - `sources/curated.txt` — independently reviewed NetCalcKit domain entries
 - `sources/sources.txt` — external-source policy; aggregate feeds are disabled
 - `evidence/initial-alpha.md` — evidence and risk record for the first alpha batch
+- `evidence/second-alpha-batch.md` — evidence and risk record for the second batch
 - `docs/domain-policy.md` — evidence and review requirements
 - `docs/alpha-testing.md` — alpha release smoke-test record
 - `docs/adguard-home-testing.md` — isolated AdGuard Home enforcement test
@@ -55,7 +56,7 @@ A domain is not added merely because another blocklist contains it. A proposed r
 
 Approved domains are recorded in `sources/curated.txt`. The builder normalizes them, removes allowlisted entries, sorts the result, and writes `blocklists/standard.txt`.
 
-The first alpha batch uses only exact service hostnames documented by their vendors. Broad vendor apex domains and user-facing dashboard hosts are intentionally excluded.
+Only exact service hostnames documented by their vendors are considered. Broad vendor apex domains and user-facing dashboard hosts are intentionally excluded.
 
 ## Reporting and contributions
 

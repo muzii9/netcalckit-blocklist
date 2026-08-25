@@ -6,6 +6,12 @@
 # Format: one lowercase domain per line.
 api.eu.amplitude.com
 api2.amplitude.com
+bam-cell.nr-data.net
+bam.eu01.nr-data.net
+bam.nr-data.net
+browser-intake-datadoghq.com
+browser-intake-datadoghq.eu
+js-agent.newrelic.com
 region1.google-analytics.com
 script.hotjar.com
 static.hotjar.com
