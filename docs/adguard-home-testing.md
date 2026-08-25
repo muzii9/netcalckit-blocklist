@@ -15,7 +15,7 @@ Tested: 2026-08-25
 - Admin listener: `127.0.0.1:3080`
 - Restart policy: disabled
 
-The non-standard loopback ports keep the test isolated. The host's existing DNS listener, router configuration, Portainer container, and client DNS settings were not changed.
+The non-standard loopback ports keep the test isolated. The host's existing DNS listener, router configuration, Portainer container, and client DNS settings were not changed. The test admin endpoint is reachable only from the server loopback interface.
 
 ## Filter configuration
 
@@ -25,21 +25,27 @@ Only the NetCalcKit subscription was enabled for the test:
 https://raw.githubusercontent.com/muzii9/netcalckit-blocklist/main/blocklists/standard.txt
 ```
 
-AdGuard Home reported exactly seven loaded rules. Its bundled AdGuard DNS and AdAway filters were disabled before testing, preventing unrelated rules from affecting the result.
+AdGuard Home reported exactly 13 loaded rules after the second batch was published and refreshed. Its bundled AdGuard DNS and AdAway filters were disabled before testing, preventing unrelated rules from affecting the result.
 
 ## DNS results
 
+| Query group | Result |
+| --- | --- |
+| 7 first-batch hostnames | All blocked as `0.0.0.0` |
+| 6 second-batch New Relic and Datadog hostnames | All blocked as `0.0.0.0` |
+| `example.com` control query | Resolved normally |
+
+Second-batch exact results:
+
 | Query | Result |
 | --- | --- |
-| `api.eu.amplitude.com` | Blocked as `0.0.0.0` |
-| `api2.amplitude.com` | Blocked as `0.0.0.0` |
-| `region1.google-analytics.com` | Blocked as `0.0.0.0` |
-| `script.hotjar.com` | Blocked as `0.0.0.0` |
-| `static.hotjar.com` | Blocked as `0.0.0.0` |
-| `www.clarity.ms` | Blocked as `0.0.0.0` |
-| `www.google-analytics.com` | Blocked as `0.0.0.0` |
-| `example.com` control query | Resolved normally |
+| `bam-cell.nr-data.net` | Blocked as `0.0.0.0` |
+| `bam.eu01.nr-data.net` | Blocked as `0.0.0.0` |
+| `bam.nr-data.net` | Blocked as `0.0.0.0` |
+| `browser-intake-datadoghq.com` | Blocked as `0.0.0.0` |
+| `browser-intake-datadoghq.eu` | Blocked as `0.0.0.0` |
+| `js-agent.newrelic.com` | Blocked as `0.0.0.0` |
 
 ## Conclusion
 
-The standard list is accepted by AdGuard Home as a one-domain-per-line subscription, all seven current rules are enforced, and an unrelated control domain remains resolvable. This confirms list-format and DNS-enforcement compatibility; broader application-level false-positive testing remains ongoing.
+The standard list is accepted by AdGuard Home as a one-domain-per-line subscription, all 13 current rules are enforced, and an unrelated control domain remains resolvable. This confirms list-format, subscription-refresh, and DNS-enforcement compatibility; broader application-level false-positive testing remains ongoing.

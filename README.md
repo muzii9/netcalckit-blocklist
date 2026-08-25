@@ -22,7 +22,7 @@ The moving `main` list includes post-release alpha work. Review the testing docu
 
 ## Compatibility
 
-The first seven-rule batch was loaded as the only active custom filter in an isolated AdGuard Home v0.107.79 instance. All listed domains were blocked and an unrelated control domain resolved normally. See `docs/adguard-home-testing.md` for the exact environment and results. The six-rule second batch is being tested through the same isolated process.
+The current 13-rule list was loaded as the only active custom filter in an isolated AdGuard Home v0.107.79 instance. All 13 listed domains were blocked, the subscription refreshed successfully, and an unrelated control domain resolved normally. See `docs/adguard-home-testing.md` for the exact environment and results.
 
 ## Repository structure
 

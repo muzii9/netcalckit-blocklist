@@ -9,9 +9,10 @@ All notable changes to this project will be documented in this file.
 - Automatic GitHub Actions validation on pushes, pull requests, and manual runs.
 - Immutable subscription URL for the v0.1.0-alpha snapshot.
 - Independent DNS and HTTPS smoke-test verification from a separate Ubuntu host.
-- Isolated AdGuard Home v0.107.79 enforcement test using only the seven-rule NetCalcKit subscription.
+- Isolated AdGuard Home v0.107.79 enforcement test using only the NetCalcKit subscription.
 - Second independently researched batch with six exact New Relic and Datadog browser telemetry hosts.
 - Official-vendor evidence and two-environment network verification for every second-batch rule.
+- Successful AdGuard Home subscription refresh and enforcement verification for all 13 current rules.
 
 ## v0.1.0-alpha — 2026-08-25
 
