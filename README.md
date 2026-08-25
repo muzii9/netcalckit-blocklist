@@ -20,6 +20,10 @@ https://raw.githubusercontent.com/muzii9/netcalckit-blocklist/v0.1.0-alpha/block
 
 This is an alpha list. Review `docs/alpha-testing.md` and report any broken essential functionality through the false-positive issue form.
 
+## Compatibility
+
+The current list has been loaded as the only active custom filter in an isolated AdGuard Home v0.107.79 instance. All seven listed domains were blocked and an unrelated control domain resolved normally. See `docs/adguard-home-testing.md` for the exact environment and results.
+
 ## Repository structure
 
 - `blocklists/standard.txt` — generated standard DNS blocklist
@@ -29,6 +33,7 @@ This is an alpha list. Review `docs/alpha-testing.md` and report any broken esse
 - `evidence/initial-alpha.md` — evidence and risk record for the first alpha batch
 - `docs/domain-policy.md` — evidence and review requirements
 - `docs/alpha-testing.md` — alpha release smoke-test record
+- `docs/adguard-home-testing.md` — isolated AdGuard Home enforcement test
 - `scripts/build.py` — deterministic blocklist builder
 - `scripts/validate.py` — format, ordering, duplicate, overlap, and reproducibility checks
 - `.github/workflows/validate.yml` — automatic validation for pushes and pull requests
