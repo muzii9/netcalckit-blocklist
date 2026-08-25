@@ -22,6 +22,17 @@ This is a release-readiness smoke test for the seven exact hostnames in the firs
 
 HTTP error codes at a root path are expected for API or resource hosts and do not indicate that the documented collection endpoint is unavailable.
 
+## Independent-device verification
+
+The same seven checks were repeated from the separately administered Ubuntu host `my-home-server` on 2026-08-25. Every hostname resolved, and each returned the same HTTP status class and exact status code observed during the primary test:
+
+- Amplitude ingestion hosts: 400
+- Google Analytics regional collection host: 404
+- Hotjar script host: 403
+- Hotjar static host, Microsoft Clarity, and standard Google Analytics host: 200
+
+No DNS, firewall, SSH, or system configuration was changed on the server during this read-only test.
+
 ## Release decision
 
 - All seven exact hostnames are retained for the alpha.
