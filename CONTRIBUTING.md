@@ -12,6 +12,16 @@ Thank you for helping improve NetCalcKit Blocklist.
 - Add false-positive domains to the allowlist with a clear explanation.
 - Keep rules lowercase, unique, and alphabetically sorted.
 
+## Issue forms
+
+Choose the matching GitHub issue form:
+
+- **Report a tracking domain** for a new evidence-backed candidate.
+- **Report a false positive** when a published rule breaks legitimate functionality.
+- **Suggest an improvement** for tooling, validation, documentation, or process changes.
+
+Submit one domain per report so each decision remains independently reviewable.
+
 ## Development checks
 
 Run both commands before opening a pull request:

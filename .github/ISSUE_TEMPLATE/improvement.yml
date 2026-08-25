@@ -1,0 +1,36 @@
+name: Suggest an improvement
+description: Propose a tooling, documentation, validation, or process improvement.
+title: "[Improvement]: "
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What problem should NetCalcKit solve?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed improvement
+      description: Describe the desired behavior or change.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Note any simpler alternatives or tradeoffs.
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Build pipeline
+        - Validation
+        - Documentation
+        - Research process
+        - Compatibility
+        - Other
+    validations:
+      required: true

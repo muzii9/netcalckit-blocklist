@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Domain inclusion policy
+    url: https://github.com/muzii9/netcalckit-blocklist/blob/main/docs/domain-policy.md
+    about: Read the evidence and false-positive requirements before submitting a domain.

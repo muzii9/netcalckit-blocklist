@@ -1,0 +1,73 @@
+name: Report a tracking domain
+description: Propose a domain for independent NetCalcKit review.
+title: "[Domain]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for helping improve NetCalcKit. Presence on another blocklist is not sufficient evidence.
+  - type: input
+    id: domain
+    attributes:
+      label: Domain
+      description: Enter one lowercase domain or narrowly justified subdomain.
+      placeholder: tracker.example.com
+    validations:
+      required: true
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      options:
+        - Advertising
+        - Tracking
+        - Analytics or metrics
+        - Telemetry
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Observed behavior
+      description: Explain what the domain serves or collects and how you observed it.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Independent evidence
+      description: Provide primary-source URLs or reproducible network, code, or DNS observations.
+      placeholder: Include URLs, request paths, timestamps, or reproducible steps.
+    validations:
+      required: true
+  - type: input
+    id: product
+    attributes:
+      label: Affected product or platform
+      placeholder: Website, application, device, or operating system
+    validations:
+      required: true
+  - type: input
+    id: date
+    attributes:
+      label: Observation date
+      placeholder: YYYY-MM-DD
+    validations:
+      required: true
+  - type: textarea
+    id: false_positive
+    attributes:
+      label: False-positive assessment
+      description: Describe legitimate functionality tested and possible breakage.
+    validations:
+      required: true
+  - type: checkboxes
+    id: declaration
+    attributes:
+      label: Original research declaration
+      options:
+        - label: I did not copy or bulk-import this proposal from another blocklist.
+          required: true
+        - label: I have disclosed any relationship with the domain or affected product.
+          required: true

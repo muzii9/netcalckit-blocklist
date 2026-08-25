@@ -31,6 +31,12 @@ A domain is not added merely because another blocklist contains it. A proposed r
 
 Approved domains are recorded in `sources/curated.txt`. The builder normalizes them, removes allowlisted entries, sorts the result, and writes `blocklists/standard.txt`.
 
+## Reporting and contributions
+
+Use the repository's structured issue forms to report a tracking domain, report a false positive, or suggest an improvement. Domain proposals require independent evidence and a false-positive assessment.
+
+See `CONTRIBUTING.md` and `docs/domain-policy.md` before submitting a domain.
+
 ## Licensing
 
 This is a multi-license repository:

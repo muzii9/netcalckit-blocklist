@@ -1,0 +1,51 @@
+name: Report a false positive
+description: Report a legitimate domain that NetCalcKit should not block.
+title: "[False positive]: "
+body:
+  - type: input
+    id: domain
+    attributes:
+      label: Domain
+      placeholder: required.example.com
+    validations:
+      required: true
+  - type: input
+    id: affected_service
+    attributes:
+      label: Affected service
+      description: Name the website, application, device, or feature that breaks.
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: What breaks?
+      description: Describe the exact user-visible impact.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction steps
+      description: Explain how to reproduce the problem with and without NetCalcKit enabled.
+    validations:
+      required: true
+  - type: input
+    id: tested
+    attributes:
+      label: Last tested
+      placeholder: YYYY-MM-DD
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Supporting evidence
+      description: Add logs, screenshots, request details, or official documentation when available.
+  - type: checkboxes
+    id: declaration
+    attributes:
+      label: Confirmation
+      options:
+        - label: I verified that disabling this specific rule restores the affected functionality.
+          required: true

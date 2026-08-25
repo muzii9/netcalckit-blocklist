@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 - Initial project and contribution documentation.
 - Independent domain inclusion and evidence policy.
 - Dedicated curated-domain input for original NetCalcKit rules.
+- Structured issue forms for domain reports, false positives, and project improvements.
 
 ### Changed
 
