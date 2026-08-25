@@ -2,7 +2,17 @@
 
 An independently curated, open-source DNS blocklist for reducing ads, trackers, and telemetry at the DNS level.
 
-> **Status:** Alpha preparation. The standard list currently contains 7 independently reviewed analytics and telemetry hostnames. NetCalcKit does not rebrand or republish third-party aggregate blocklists.
+> **Status:** v0.1.0-alpha. The standard list currently contains 7 independently reviewed analytics and telemetry hostnames. NetCalcKit does not rebrand or republish third-party aggregate blocklists.
+
+## Subscribe
+
+Use this URL in a DNS blocker that accepts one-domain-per-line lists:
+
+```text
+https://raw.githubusercontent.com/muzii9/netcalckit-blocklist/main/blocklists/standard.txt
+```
+
+This is an alpha list. Review `docs/alpha-testing.md` and report any broken essential functionality through the false-positive issue form.
 
 ## Repository structure
 
@@ -12,6 +22,7 @@ An independently curated, open-source DNS blocklist for reducing ads, trackers, 
 - `sources/sources.txt` — external-source policy; aggregate feeds are disabled
 - `evidence/initial-alpha.md` — evidence and risk record for the first alpha batch
 - `docs/domain-policy.md` — evidence and review requirements
+- `docs/alpha-testing.md` — alpha release smoke-test record
 - `scripts/build.py` — deterministic blocklist builder
 - `scripts/validate.py` — format, ordering, duplicate, overlap, and reproducibility checks
 - `CONTRIBUTING.md` — contribution guidelines
