@@ -24,13 +24,15 @@ The moving `main` list includes post-release alpha work. Review the testing docu
 
 The current 13-rule list was loaded as the only active custom filter in an isolated AdGuard Home v0.107.79 instance. All 13 listed domains were blocked, the subscription refreshed successfully, and an unrelated control domain resolved normally. This verifies DNS enforcement, not universal app compatibility.
 
+Controlled browser comparisons have now exercised six current rules on vendor-owned public pages. Four received a preliminary core-render smoke pass, two have render-only evidence, and seven remain unexercised. These are narrow alpha results, not universal compatibility clearance.
+
 - [Install in AdGuard Home](docs/install-adguard-home.md)
 - [False-positive testing protocol](docs/false-positive-testing.md)
 - [Application compatibility test record](docs/application-testing.md)
 - [Platform support status](docs/platform-support.md)
 - [AdGuard Home test record](docs/adguard-home-testing.md)
 
-The first controlled website comparison passed its core-function checks, but the page did not request any current list hostname during that run; consequently, no individual rule has been marked application-cleared. Guides for Pi-hole, NextDNS, and Control D are intentionally withheld until each platform is verified from authoritative documentation and direct testing.
+Guides for Pi-hole, NextDNS, and Control D are intentionally withheld until each platform is verified from authoritative documentation and direct testing.
 
 ## Repository structure
 

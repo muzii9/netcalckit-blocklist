@@ -17,12 +17,13 @@ All notable changes to this project will be documented in this file.
 - Application-level false-positive testing protocol and severity model.
 - Platform support matrix separating verified support from pending research.
 - First controlled browser comparison of NetCalcKit core page, calculator, and tool-search behavior.
+- Vendor-owned public-page comparison exercising six current rules; four received preliminary core-render passes and two received render-only evidence.
 
 ### Changed
 
 - Clarified that DNS enforcement testing does not constitute universal application compatibility.
 - Withheld unverified Pi-hole, NextDNS, and Control D instructions until authoritative review and direct testing are complete.
-- Recorded zero rule-level application clearances when the test page did not exercise a current list hostname.
+- Kept rule-level classifications narrow when a page or test metric did not provide sufficient evidence.
 
 ## v0.1.0-alpha — 2026-08-25
 
