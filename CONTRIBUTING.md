@@ -2,13 +2,15 @@
 
 Thank you for helping improve NetCalcKit Blocklist.
 
-## Before submitting a change
+## Domain proposals
 
-- Limit blocklist entries to domains used for ads, tracking, or telemetry.
-- Do not add an upstream list until its provenance, maintenance quality, and license have been reviewed.
-- Check that a proposed block does not break essential site functionality.
-- Add false-positive domains to the allowlist only with a clear explanation.
-- Keep domain rules lowercase, unique, and alphabetically sorted.
+- Do not copy or bulk-import any third-party blocklist.
+- Another list containing a domain is not sufficient evidence.
+- Follow `docs/domain-policy.md` and provide independently reviewable evidence.
+- Explain the category, observed behavior, affected product, observation date, and false-positive risk.
+- Do not block shared or essential infrastructure without a narrowly justified subdomain.
+- Add false-positive domains to the allowlist with a clear explanation.
+- Keep rules lowercase, unique, and alphabetically sorted.
 
 ## Development checks
 
@@ -21,6 +23,6 @@ python3 scripts/validate.py
 
 In a pull request, explain what changed, why it is needed, how it was tested, and any expected compatibility impact.
 
-## Source and license safety
+## Original-work policy
 
-Do not copy or aggregate third-party blocklist data without confirming that its license permits the intended use and redistribution. Licensing decisions are intentionally deferred until documented research is complete.
+NetCalcKit does not ingest or rebrand third-party aggregate lists. Submissions copied from external lists will be rejected. External lists may only identify candidates that are then investigated independently.

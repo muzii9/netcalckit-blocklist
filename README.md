@@ -1,14 +1,16 @@
 # NetCalcKit Blocklist
 
-An open-source DNS blocklist project for reducing ads, trackers, and telemetry at the DNS level.
+An independently curated, open-source DNS blocklist for reducing ads, trackers, and telemetry at the DNS level.
 
-> **Status:** Phase 1 foundation. The standard list is intentionally empty until candidate sources and their licenses have been reviewed.
+> **Status:** Early development. NetCalcKit does not rebrand or republish third-party aggregate blocklists. Every published rule must pass the project's own evidence and false-positive review.
 
 ## Repository structure
 
 - `blocklists/standard.txt` — generated standard DNS blocklist
 - `allowlists/allowlist.txt` — reviewed domains that must not be blocked
-- `sources/sources.txt` — approved upstream source URLs
+- `sources/curated.txt` — independently reviewed NetCalcKit domain entries
+- `sources/sources.txt` — external-source policy; aggregate feeds are disabled
+- `docs/domain-policy.md` — evidence and review requirements
 - `scripts/build.py` — deterministic blocklist builder
 - `scripts/validate.py` — format, ordering, and duplicate checks
 - `CONTRIBUTING.md` — contribution guidelines
@@ -23,19 +25,12 @@ python3 scripts/build.py
 python3 scripts/validate.py
 ```
 
-The builder reads only sources explicitly listed in `sources/sources.txt`. No third-party sources are included yet.
+## Curation model
 
-## Rule format
+A domain is not added merely because another blocklist contains it. A proposed rule needs independently reviewable evidence showing that the domain is dedicated to advertising, tracking, or telemetry, plus a false-positive assessment.
 
-The starter pipeline accepts one domain per line:
-
-```text
-example.com
-tracker.example
-```
-
-Blank lines and comments beginning with `#`, `!`, or `[` are ignored. Hosts-file entries using `0.0.0.0` or `127.0.0.1` are normalized to domains. Allowlisted domains are removed from generated output.
+Approved domains are recorded in `sources/curated.txt`. The builder normalizes them, removes allowlisted entries, sorts the result, and writes `blocklists/standard.txt`.
 
 ## License
 
-No license has been selected. A license will be added only after the project and upstream-source licensing requirements have been researched.
+No license has been selected yet. The project will choose a license for its independently curated data and scripts before the first public release.

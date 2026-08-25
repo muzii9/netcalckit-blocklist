@@ -1,0 +1,3 @@
+# Independently reviewed NetCalcKit domains
+# Add one lowercase domain per line only after the evidence requirements
+# in docs/domain-policy.md have been satisfied.
