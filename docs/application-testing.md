@@ -91,3 +91,36 @@ A site loading successfully while it does not exercise a listed hostname cannot 
 ## Next coverage targets
 
 Future runs should prioritize the seven unexercised regional or collector-specific hostnames and deeper feature tests for the six exercised rules. Authentication, private user data, payments, and destructive actions must not be used merely to increase coverage.
+
+
+## 2026-08-25 — Regional collector testability review
+
+Official vendor documentation confirms that the seven currently unexercised hostnames are specialized analytics resources rather than general application backends:
+
+| Hostname | Officially documented role | Why public-page coverage is limited |
+| --- | --- | --- |
+| `api.eu.amplitude.com` | Amplitude EU event ingestion | Requires an Amplitude project configured for EU data residency. |
+| `bam.nr-data.net` | New Relic standard US browser payload collector | Collector selection depends on an instrumented application's New Relic account and agent configuration. |
+| `bam-cell.nr-data.net` | New Relic US cellular-account browser payload collector | Account-specific collector; a generic public page cannot reliably force selection. |
+| `bam.eu01.nr-data.net` | New Relic EU browser payload collector | Requires an EU New Relic browser-monitoring configuration. |
+| `browser-intake-datadoghq.eu` | Datadog EU1 RUM/browser intake | Requires a Datadog RUM application configured for the EU1 site. |
+| `region1.google-analytics.com` | Google Analytics EU collection endpoint | Requires an implementation explicitly using the regional collection URL. |
+| `script.hotjar.com` | Hotjar script/font/style resource host | Vendor pages observed `static.hotjar.com`, but did not naturally request this second resource host during the test window. |
+
+Sources:
+
+- [Amplitude HTTP V2 regions](https://amplitude.com/docs/apis/analytics/http-v2)
+- [New Relic browser compatibility and collector endpoints](https://docs.newrelic.com/docs/browser/new-relic-browser/getting-started/compatibility-requirements-browser-monitoring/)
+- [Datadog RUM supported endpoints](https://docs.datadoghq.com/real_user_monitoring/)
+- [Google Analytics regional validation endpoint](https://developers.google.com/analytics/devguides/collection/protocol/ga4/validating-events)
+- [Hotjar Content Security Policy requirements](https://help.hotjar.com/hc/en-us/articles/36820026388881-Content-Security-Policies)
+
+### Required evidence for promotion
+
+These rules must not be described as application-cleared merely because direct DNS and HTTPS tests succeed. Promotion beyond provisional alpha status requires at least one of:
+
+1. a controlled application with the correct vendor region/account configuration that requests the exact hostname in baseline and retains its core function while blocked;
+2. a reproducible, sanitized community report meeting the false-positive testing protocol; or
+3. removal of the rule if material breakage is confirmed or the exact-host evidence becomes ambiguous.
+
+A synthetic page that directly requests a collector can prove enforcement but cannot prove real application compatibility, so it is not counted as an application test.
