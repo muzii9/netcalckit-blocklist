@@ -1,15 +1,18 @@
 # Independently reviewed NetCalcKit domains
 # SPDX-License-Identifier: ODbL-1.0
 # Copyright (c) 2026 NetCalcKit contributors
-# Evidence: evidence/initial-alpha.md and evidence/second-alpha-batch.md
+# Evidence: evidence/initial-alpha.md, evidence/second-alpha-batch.md,
+# and evidence/third-alpha-batch.md
 # One lowercase domain per line.
 api.eu.amplitude.com
+api.segment.io
 api2.amplitude.com
 bam-cell.nr-data.net
 bam.eu01.nr-data.net
 bam.nr-data.net
 browser-intake-datadoghq.com
 browser-intake-datadoghq.eu
+events.eu1.segmentapis.com
 js-agent.newrelic.com
 region1.google-analytics.com
 script.hotjar.com

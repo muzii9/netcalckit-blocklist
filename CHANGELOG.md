@@ -4,7 +4,9 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
-No unreleased changes yet.
+### Added
+
+- Two independently verified Twilio Segment event-ingestion hosts with official evidence and false-positive assessments.
 
 ## v0.2.0-alpha — 2026-08-25
 
