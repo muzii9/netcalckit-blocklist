@@ -1,8 +1,8 @@
 # NetCalcKit Blocklist
 
-An independently curated, open-source DNS blocklist for reducing ads, trackers, and telemetry at the DNS level.
+A small open-source DNS blocklist for ads, trackers, and telemetry.
 
-> **Status:** v0.2.0-alpha is published as a prerelease. The standard list contains 13 independently reviewed analytics and telemetry hostnames. NetCalcKit does not rebrand or republish third-party aggregate blocklists.
+> **Status:** v0.2.0-alpha is published as a prerelease. The current `main` list contains 15 analytics and telemetry hostnames. The published v0.2.0-alpha release contains 13 rules.
 
 ## Subscribe
 
@@ -18,15 +18,15 @@ For the immutable 13-rule `v0.2.0-alpha` snapshot, use:
 https://raw.githubusercontent.com/muzii9/netcalckit-blocklist/v0.2.0-alpha/blocklists/standard.txt
 ```
 
-The moving `main` list includes post-release alpha work. Review the testing documents and report any broken essential functionality through the false-positive issue form.
+The `main` list includes work added after the release. If something breaks, use the false-positive issue form.
 
 ## Compatibility
 
-The current 13-rule list was loaded as the only active custom filter in an isolated AdGuard Home v0.107.79 instance. All 13 listed domains were blocked, the subscription refreshed successfully, and an unrelated control domain resolved normally. This verifies DNS enforcement, not universal app compatibility.
+The 13-rule v0.2.0-alpha list was loaded as the only active custom filter in an isolated AdGuard Home v0.107.79 instance. All 13 domains were blocked, the subscription refreshed successfully, and an unrelated control domain resolved normally. That confirms DNS enforcement, not universal app compatibility.
 
-Controlled browser comparisons have now exercised six current rules on vendor-owned public pages. Four received a preliminary core-render smoke pass, two have render-only evidence, and seven remain unexercised. These are narrow alpha results, not universal compatibility clearance.
+Controlled browser comparisons have exercised six of those 13 rules on vendor-owned public pages. Four received a basic core-render smoke test, two have render-only evidence, and seven remain unexercised.
 
-The complete 13-rule subscription has been parsed and enforced successfully in isolated AdGuard Home and Pi-hole environments, each with an unrelated control domain resolving normally.
+The same 13-rule release was also parsed and enforced successfully in isolated AdGuard Home and Pi-hole environments, with an unrelated control domain resolving normally in both.
 
 - [Install in AdGuard Home](docs/install-adguard-home.md)
 - [Install in Pi-hole](docs/install-pihole.md)
@@ -36,27 +36,28 @@ The complete 13-rule subscription has been parsed and enforced successfully in i
 - [AdGuard Home test record](docs/adguard-home-testing.md)
 - [Pi-hole test record](docs/pihole-testing.md)
 
-Guides for NextDNS and Control D are intentionally withheld until each platform is verified from authoritative documentation and direct testing.
+NextDNS and Control D guides are being held back until those platforms are checked against current documentation and tested directly.
 
 ## Repository structure
 
 - `blocklists/standard.txt` — generated standard DNS blocklist
-- `allowlists/allowlist.txt` — reviewed domains that must not be blocked
-- `sources/curated.txt` — independently reviewed NetCalcKit domain entries
+- `allowlists/allowlist.txt` — domains that must not be blocked
+- `sources/curated.txt` — reviewed NetCalcKit domain entries
 - `sources/sources.txt` — external-source policy; aggregate feeds are disabled
-- `evidence/initial-alpha.md` — evidence and risk record for the first alpha batch
-- `evidence/second-alpha-batch.md` — evidence and risk record for the second batch
+- `evidence/initial-alpha.md` — evidence and risk notes for the first alpha batch
+- `evidence/second-alpha-batch.md` — evidence and risk notes for the second batch
+- `evidence/third-alpha-batch.md` — evidence and risk notes for the third batch
 - `docs/domain-policy.md` — evidence and review requirements
 - `docs/alpha-testing.md` — alpha release smoke-test record
 - `docs/adguard-home-testing.md` — isolated AdGuard Home enforcement test
-- `docs/install-adguard-home.md` — verified AdGuard Home installation and rollback guide
-- `docs/install-pihole.md` — verified Pi-hole installation and rollback guide
+- `docs/install-adguard-home.md` — AdGuard Home installation and rollback guide
+- `docs/install-pihole.md` — Pi-hole installation and rollback guide
 - `docs/false-positive-testing.md` — application-level false-positive protocol
 - `docs/application-testing.md` — controlled app-test results and rule coverage
 - `docs/platform-support.md` — verified and pending platform status
 - `docs/pihole-testing.md` — isolated Pi-hole Gravity and enforcement test
-- `docs/stable-release-criteria.md` — mandatory gates for a non-prerelease version
-- `scripts/domain_utils.py` — shared strict domain-file parser
+- `docs/stable-release-criteria.md` — gates for a non-prerelease version
+- `scripts/domain_utils.py` — shared domain-file parser
 - `scripts/build.py` — deterministic blocklist builder
 - `scripts/validate.py` — format, ordering, duplicate, overlap, and reproducibility checks
 - `tests/test_domain_utils.py` — parser and malformed-input unit tests
@@ -75,15 +76,15 @@ python3 scripts/validate.py
 
 ## Curation model
 
-A domain is not added merely because another blocklist contains it. A proposed rule needs independently reviewable evidence showing that the domain is dedicated to advertising, tracking, or telemetry, plus a false-positive assessment.
+A domain is not added just because another blocklist contains it. Each rule needs reviewable evidence that it is used for advertising, tracking, or telemetry, plus a false-positive check.
 
 Approved domains are recorded in `sources/curated.txt`. The builder normalizes them, removes allowlisted entries, sorts the result, and writes `blocklists/standard.txt`.
 
-Only exact service hostnames documented by their vendors are considered. Broad vendor apex domains and user-facing dashboard hosts are intentionally excluded.
+The list sticks to exact service hostnames where possible. Broad vendor apex domains and user-facing dashboard hosts are excluded.
 
 ## Reporting and contributions
 
-Use the repository's structured issue forms to report a tracking domain, report a false positive, or suggest an improvement. Domain proposals require independent evidence and a false-positive assessment.
+Use the issue forms to report a tracking domain, a false positive, or a project improvement. Domain proposals should include evidence and a short false-positive assessment.
 
 See `CONTRIBUTING.md` and `docs/domain-policy.md` before submitting a domain.
 
