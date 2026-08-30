@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - Two Twilio Segment event-ingestion hosts, with vendor documentation and false-positive notes.
+- Fifty vendor-documented Clarity, Datadog, FullStory, and Application Insights analytics or observability hosts, with per-rule risk notes.
 
 ## v0.2.0-alpha — 2026-08-25
 

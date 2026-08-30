@@ -2,20 +2,70 @@
 # SPDX-License-Identifier: ODbL-1.0
 # Copyright (c) 2026 NetCalcKit contributors
 # Evidence: evidence/initial-alpha.md, evidence/second-alpha-batch.md,
-# and evidence/third-alpha-batch.md
+# evidence/third-alpha-batch.md, and evidence/fourth-alpha-batch.md
 # One lowercase domain per line.
+a.clarity.ms
 api.eu.amplitude.com
 api.segment.io
 api2.amplitude.com
+b.clarity.ms
 bam-cell.nr-data.net
 bam.eu01.nr-data.net
 bam.nr-data.net
+browser-intake-ap1-datadoghq.com
+browser-intake-ap2-datadoghq.com
 browser-intake-datadoghq.com
 browser-intake-datadoghq.eu
+browser-intake-ddog-gov.com
+browser-intake-uk1-datadoghq.com
+browser-intake-us2-ddog-gov.com
+browser-intake-us3-datadoghq.com
+browser-intake-us5-datadoghq.com
+c.clarity.ms
+d.clarity.ms
+dc.applicationinsights.azure.com
+dc.applicationinsights.microsoft.com
+dc.services.visualstudio.com
+e.clarity.ms
+edge.eu1.fullstory.com
+edge.fullstory.com
 events.eu1.segmentapis.com
+f.clarity.ms
+g.clarity.ms
+h.clarity.ms
+i.clarity.ms
+j.clarity.ms
 js-agent.newrelic.com
+k.clarity.ms
+l.clarity.ms
+live.applicationinsights.azure.com
+m.clarity.ms
+n.clarity.ms
+o.clarity.ms
+p.clarity.ms
+q.clarity.ms
+quota.browser-intake-ap1-datadoghq.com
+quota.browser-intake-ap2-datadoghq.com
+quota.browser-intake-datadoghq.com
+quota.browser-intake-datadoghq.eu
+quota.browser-intake-uk1-datadoghq.com
+quota.browser-intake-us3-datadoghq.com
+quota.browser-intake-us5-datadoghq.com
+r.clarity.ms
 region1.google-analytics.com
+rs.eu1.fullstory.com
+rs.fullstory.com
+rt.applicationinsights.microsoft.com
+rt.services.visualstudio.com
+s.clarity.ms
 script.hotjar.com
 static.hotjar.com
+t.clarity.ms
+u.clarity.ms
+v.clarity.ms
+w.clarity.ms
 www.clarity.ms
 www.google-analytics.com
+x.clarity.ms
+y.clarity.ms
+z.clarity.ms

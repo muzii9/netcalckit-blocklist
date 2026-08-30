@@ -2,7 +2,7 @@
 
 A small open-source DNS blocklist for ads, trackers, and telemetry.
 
-> **Status:** v0.2.0-alpha is published as a prerelease. The current `main` list contains 15 analytics and telemetry hostnames. The published v0.2.0-alpha release contains 13 rules.
+> **Status:** v0.2.0-alpha is published as a prerelease. The current `main` list contains 65 analytics, telemetry, and observability hostnames. The published v0.2.0-alpha release contains 13 rules.
 
 ## Subscribe
 
