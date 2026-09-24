@@ -2,7 +2,8 @@
 # SPDX-License-Identifier: ODbL-1.0
 # Copyright (c) 2026 NetCalcKit contributors
 # Evidence: evidence/initial-alpha.md, evidence/second-alpha-batch.md,
-# evidence/third-alpha-batch.md, and evidence/fourth-alpha-batch.md
+# evidence/third-alpha-batch.md, evidence/fourth-alpha-batch.md,
+# and evidence/fifth-alpha-batch.md
 # One lowercase domain per line.
 a.clarity.ms
 api.eu.amplitude.com
@@ -22,7 +23,9 @@ browser-intake-us2-ddog-gov.com
 browser-intake-us3-datadoghq.com
 browser-intake-us5-datadoghq.com
 c.clarity.ms
+cdn.linkedin.oribi.io
 d.clarity.ms
+dc.ads.linkedin.com
 dc.applicationinsights.azure.com
 dc.applicationinsights.microsoft.com
 dc.services.visualstudio.com
@@ -32,6 +35,7 @@ edge.fullstory.com
 events.eu1.segmentapis.com
 f.clarity.ms
 g.clarity.ms
+gw.linkedin.oribi.io
 h.clarity.ms
 i.clarity.ms
 j.clarity.ms
@@ -42,7 +46,10 @@ live.applicationinsights.azure.com
 m.clarity.ms
 n.clarity.ms
 o.clarity.ms
+p.adsymptotic.com
 p.clarity.ms
+px.ads.linkedin.com
+px4.ads.linkedin.com
 q.clarity.ms
 quota.browser-intake-ap1-datadoghq.com
 quota.browser-intake-ap2-datadoghq.com
@@ -59,6 +66,8 @@ rt.applicationinsights.microsoft.com
 rt.services.visualstudio.com
 s.clarity.ms
 script.hotjar.com
+sjs.bizographics.com
+snap.licdn.com
 static.hotjar.com
 t.clarity.ms
 u.clarity.ms
