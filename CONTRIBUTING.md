@@ -12,6 +12,10 @@ Thanks for helping improve NetCalcKit Blocklist.
 - Put confirmed false positives in the allowlist with a short reason.
 - Keep rule database rows unique and alphabetically sorted by domain.
 
+## Candidate queue
+
+New discoveries should normally start in `candidates/candidates.csv`, not directly in the published rule database. Run `python3 scripts/validate_candidates.py` and `python3 scripts/score_candidates.py` while researching them. A HIGH triage score is a research signal, not permission to publish.
+
 ## Rule database
 
 `rules/rules.csv` is the source of truth for approved, held, and removed candidates.
@@ -39,6 +43,8 @@ Run these commands before opening a pull request:
 
 ```bash
 python3 -m unittest discover -s tests -v
+python3 scripts/validate_candidates.py
+python3 scripts/score_candidates.py
 python3 scripts/build.py
 python3 scripts/validate.py
 ```
