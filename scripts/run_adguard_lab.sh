@@ -51,7 +51,7 @@ python3 -m http.server "$SOURCE_PORT" --bind 0.0.0.0 --directory "$PWD"     >"$l
 http_pid=$!
 
 for _ in {1..30}; do
-    if curl -fsS "http://127.0.0.1:$SOURCE_PORT/blocklists/standard.txt" >/dev/null; then
+    if curl -fsS "http://127.0.0.1:$SOURCE_PORT/blocklists/standard.txt" >/dev/null 2>&1; then
         break
     fi
     sleep 0.2
@@ -84,8 +84,9 @@ curl -fsS -u 'ci:netcalckit-ci-only' "http://127.0.0.1:$WEB_PORT/control/status"
 curl -fsS -u 'ci:netcalckit-ci-only' -X POST     -H 'Content-Type: application/json'     --data '{"blocking_mode":"null_ip","protection_enabled":true}'     "http://127.0.0.1:$WEB_PORT/control/dns_config" >/dev/null
 
 filter_url="http://host.docker.internal:$SOURCE_PORT/blocklists/standard.txt"
+filter_payload="$(printf '{"name":"NetCalcKit Standard RC","url":"%s","whitelist":false}' "$filter_url")"
 
-curl -fsS -u 'ci:netcalckit-ci-only' -X POST     -H 'Content-Type: application/json'     --data "{"name":"NetCalcKit Standard RC","url":"$filter_url","whitelist":false}"     "http://127.0.0.1:$WEB_PORT/control/filtering/add_url" >/dev/null
+curl -fsS -u 'ci:netcalckit-ci-only' -X POST     -H 'Content-Type: application/json'     --data "$filter_payload"     "http://127.0.0.1:$WEB_PORT/control/filtering/add_url" >/dev/null
 
 curl -fsS -u 'ci:netcalckit-ci-only' -X POST     -H 'Content-Type: application/json'     --data '{"enabled":true,"interval":24}'     "http://127.0.0.1:$WEB_PORT/control/filtering/config" >/dev/null
 
