@@ -41,6 +41,8 @@ NextDNS and Control D guides are being held back until those platforms are check
 ## Repository structure
 
 - `blocklists/standard.txt` — generated standard DNS blocklist
+- `candidates/candidates.csv` — staged, unpublished domain research queue
+- `candidates/README.md` — candidate schema, triage scoring, and promotion workflow
 - `allowlists/allowlist.txt` — domains that must not be blocked
 - `rules/rules.csv` — source-of-truth rule metadata (domain, vendor, category, evidence, risk, tier, status, review date)
 - `rules/README.md` — rule database schema and workflow
@@ -62,12 +64,18 @@ NextDNS and Control D guides are being held back until those platforms are check
 - `docs/pihole-testing.md` — isolated Pi-hole Gravity and enforcement test
 - `docs/stable-release-criteria.md` — gates for a non-prerelease version
 - `docs/automation.md` — source-of-truth, CI, and home-server test architecture
+- `docs/candidate-pipeline.md` — staged research, triage scoring, DNS health, and promotion process
 - `scripts/domain_utils.py` — shared domain-file parser
+- `scripts/candidate_db.py` — staged candidate parser and deterministic triage scoring
+- `scripts/validate_candidates.py` — candidate/rule/allowlist conflict validation
+- `scripts/score_candidates.py` — research-priority report generator
+- `scripts/check_dns_health.py` — DNS health report generator for candidates and published rules
 - `scripts/rule_db.py` — structured rule database parser and tier selection
 - `scripts/build.py` — deterministic blocklist builder
 - `scripts/validate.py` — format, ordering, duplicate, overlap, and reproducibility checks
 - `scripts/test_adguard_home.sh` — reusable AdGuard Home DNS enforcement verifier with retry/TCP fallback
 - `tests/test_domain_utils.py` — parser and malformed-input unit tests
+- `tests/test_candidate_db.py` — candidate validation and scoring tests
 - `tests/test_rule_db.py` — structured metadata, sorting, status, date, and tier tests
 - `.github/workflows/validate.yml` — automatic validation for pushes and pull requests
 - `CONTRIBUTING.md` — contribution guidelines
@@ -78,6 +86,9 @@ NextDNS and Control D guides are being held back until those platforms are check
 Python 3.10 or newer is required. The Python scripts use only the standard library.
 
 ```bash
+python3 -m unittest discover -s tests -v
+python3 scripts/validate_candidates.py
+python3 scripts/score_candidates.py
 python3 scripts/build.py
 python3 scripts/validate.py
 ```
@@ -92,7 +103,9 @@ The verifier retries temporary UDP failures, falls back to TCP, and keeps transp
 
 ## Curation model
 
-A domain is not added just because another blocklist contains it. Each rule needs reviewable evidence that it is used for advertising, tracking, or telemetry, plus a false-positive check.
+A domain is not added just because another blocklist contains it. Discovery starts in `candidates/candidates.csv`, where automation can validate structure, calculate a transparent research-priority score, and report current DNS health. None of those checks auto-approve a rule.
+
+Each published rule still needs reviewable evidence that it is used for advertising, tracking, or telemetry, plus a false-positive check.
 
 `rules/rules.csv` is the source of truth. Each row records the hostname plus vendor, category, evidence file, false-positive risk, tier, status, and review date. The builder generates `sources/curated.txt` and `blocklists/standard.txt`, applying the allowlist at build time.
 
