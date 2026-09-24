@@ -61,6 +61,14 @@ class CandidateDatabaseTests(unittest.TestCase):
         candidate = load_candidates(path)[0]
         self.assertEqual(score_candidate(candidate).band, "HOLD")
 
+    def test_explicit_hold_status_forces_hold(self) -> None:
+        path = self.write_csv(
+            "track.example.com,Vendor,analytics,https://example.com/docs,"
+            "vendor-doc,yes,no,no,low,hold,2026-09-24,manual hold\\n"
+        )
+        candidate = load_candidates(path)[0]
+        self.assertEqual(score_candidate(candidate).band, "HOLD")
+
     def test_third_party_signal_cannot_score_high(self) -> None:
         path = self.write_csv(
             "track.example.com,Vendor,analytics,https://example.com/report,"
