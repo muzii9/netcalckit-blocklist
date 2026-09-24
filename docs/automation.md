@@ -16,6 +16,12 @@ rules/rules.csv
 
 `allowlists/allowlist.txt` is applied at build time so an approved rule can be temporarily overridden without deleting its research record.
 
+## Candidate intake
+
+New discoveries are staged in `candidates/candidates.csv`. CI validates the queue, calculates a transparent triage score, and records DNS health. Candidates never flow into the published list automatically; promotion still requires evidence and false-positive review.
+
+See `docs/candidate-pipeline.md` for the lifecycle and scoring rules.
+
 ## GitHub Actions quality gate
 
 Every push and pull request:
@@ -23,7 +29,8 @@ Every push and pull request:
 1. runs unit tests;
 2. rebuilds generated files from the rule database;
 3. validates metadata, evidence references, domains, sorting, duplicates, allowlist behavior, and reproducibility;
-4. fails if generated files differ from what is committed.
+4. validates the staged candidate queue against existing rules and the allowlist;
+5. fails if generated files differ from what is committed.
 
 This prevents hand-edited or stale published lists from being merged.
 
