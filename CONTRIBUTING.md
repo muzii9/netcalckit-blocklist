@@ -10,7 +10,18 @@ Thanks for helping improve NetCalcKit Blocklist.
 - Note what the domain does, which product uses it, when it was observed, and the likely false-positive risk.
 - Avoid shared or essential infrastructure unless the exact subdomain is clearly justified.
 - Put confirmed false positives in the allowlist with a short reason.
-- Keep rules lowercase, unique, and alphabetically sorted.
+- Keep rule database rows unique and alphabetically sorted by domain.
+
+## Rule database
+
+`rules/rules.csv` is the source of truth for approved, held, and removed candidates.
+
+Do not edit these generated files by hand:
+
+- `sources/curated.txt`
+- `blocklists/standard.txt`
+
+After changing rule metadata, run the builder to regenerate them.
 
 ## Issue forms
 
@@ -24,11 +35,18 @@ Please keep domain reports to one domain each so they are easier to review.
 
 ## Development checks
 
-Run both commands before opening a pull request:
+Run these commands before opening a pull request:
 
 ```bash
+python3 -m unittest discover -s tests -v
 python3 scripts/build.py
 python3 scripts/validate.py
+```
+
+For an isolated AdGuard Home test endpoint, you can also run:
+
+```bash
+DNS_SERVER=192.168.1.100 DNS_PORT=5053 bash scripts/test_adguard_home.sh
 ```
 
 In a pull request, say what changed, why, how you tested it, and whether it could affect compatibility.
