@@ -42,7 +42,9 @@ NextDNS and Control D guides are being held back until those platforms are check
 
 - `blocklists/standard.txt` — generated standard DNS blocklist
 - `allowlists/allowlist.txt` — domains that must not be blocked
-- `sources/curated.txt` — reviewed NetCalcKit domain entries
+- `rules/rules.csv` — source-of-truth rule metadata (domain, vendor, category, evidence, risk, tier, status, review date)
+- `rules/README.md` — rule database schema and workflow
+- `sources/curated.txt` — generated approved-domain compatibility view
 - `sources/sources.txt` — external-source policy; aggregate feeds are disabled
 - `evidence/initial-alpha.md` — evidence and risk notes for the first alpha batch
 - `evidence/second-alpha-batch.md` — evidence and risk notes for the second batch
@@ -59,11 +61,14 @@ NextDNS and Control D guides are being held back until those platforms are check
 - `docs/platform-support.md` — verified and pending platform status
 - `docs/pihole-testing.md` — isolated Pi-hole Gravity and enforcement test
 - `docs/stable-release-criteria.md` — gates for a non-prerelease version
+- `docs/automation.md` — source-of-truth, CI, and home-server test architecture
 - `scripts/domain_utils.py` — shared domain-file parser
+- `scripts/rule_db.py` — structured rule database parser and tier selection
 - `scripts/build.py` — deterministic blocklist builder
 - `scripts/validate.py` — format, ordering, duplicate, overlap, and reproducibility checks
 - `scripts/test_adguard_home.sh` — reusable AdGuard Home DNS enforcement verifier with retry/TCP fallback
 - `tests/test_domain_utils.py` — parser and malformed-input unit tests
+- `tests/test_rule_db.py` — structured metadata, sorting, status, date, and tier tests
 - `.github/workflows/validate.yml` — automatic validation for pushes and pull requests
 - `CONTRIBUTING.md` — contribution guidelines
 - `CHANGELOG.md` — project history
@@ -89,7 +94,9 @@ The verifier retries temporary UDP failures, falls back to TCP, and keeps transp
 
 A domain is not added just because another blocklist contains it. Each rule needs reviewable evidence that it is used for advertising, tracking, or telemetry, plus a false-positive check.
 
-Approved domains are recorded in `sources/curated.txt`. The builder normalizes them, removes allowlisted entries, sorts the result, and writes `blocklists/standard.txt`.
+`rules/rules.csv` is the source of truth. Each row records the hostname plus vendor, category, evidence file, false-positive risk, tier, status, and review date. The builder generates `sources/curated.txt` and `blocklists/standard.txt`, applying the allowlist at build time.
+
+Generated domain files are not edited by hand. GitHub Actions rebuilds them and fails if the committed output is stale or inconsistent with the rule database.
 
 The list sticks to exact service hostnames where possible. Broad vendor apex domains and user-facing dashboard hosts are excluded.
 

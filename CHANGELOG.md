@@ -6,6 +6,9 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- Structured `rules/rules.csv` source of truth with vendor, category, evidence, false-positive risk, tier, status, and review-date metadata.
+- Rule-database parser, metadata unit tests, evidence-reference validation, and cumulative tier support.
+- Automation architecture documentation for GitHub Actions and the isolated home-server test lab.
 - Reusable AdGuard Home verification script with UDP retry, TCP fallback, transport-error separation, and pass-rate reporting.
 - Two Twilio Segment event-ingestion hosts, with vendor documentation and false-positive notes.
 - Fifty vendor-documented Clarity, Datadog, FullStory, and Application Insights analytics or observability hosts, with per-rule risk notes.
@@ -37,6 +40,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+- `sources/curated.txt` and `blocklists/standard.txt` are now generated from the structured rule database rather than maintained as the primary source.
 - Clarified that DNS enforcement tests do not prove universal application compatibility.
 - Held back unverified Pi-hole, NextDNS, and Control D instructions until documentation review and direct testing are complete.
 - Kept rule classifications narrow when available evidence did not support broader claims.

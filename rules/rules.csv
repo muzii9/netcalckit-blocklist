@@ -1,0 +1,74 @@
+domain,vendor,category,evidence_file,false_positive_risk,tier,status,last_reviewed
+a.clarity.ms,Microsoft Clarity,behavioral_analytics,evidence/fourth-alpha-batch.md,moderate,standard,approved,2026-08-30
+api.eu.amplitude.com,Amplitude,product_analytics,evidence/initial-alpha.md,moderate,standard,approved,2026-08-25
+api.segment.io,Twilio Segment,customer_data_analytics,evidence/third-alpha-batch.md,moderate,standard,approved,2026-08-26
+api2.amplitude.com,Amplitude,product_analytics,evidence/initial-alpha.md,moderate,standard,approved,2026-08-25
+b.clarity.ms,Microsoft Clarity,behavioral_analytics,evidence/fourth-alpha-batch.md,moderate,standard,approved,2026-08-30
+bam-cell.nr-data.net,New Relic,browser_telemetry,evidence/second-alpha-batch.md,low-moderate,standard,approved,2026-08-25
+bam.eu01.nr-data.net,New Relic,browser_telemetry,evidence/second-alpha-batch.md,low-moderate,standard,approved,2026-08-25
+bam.nr-data.net,New Relic,browser_telemetry,evidence/second-alpha-batch.md,low-moderate,standard,approved,2026-08-25
+browser-intake-ap1-datadoghq.com,Datadog,browser_observability,evidence/fourth-alpha-batch.md,moderate,standard,approved,2026-08-30
+browser-intake-ap2-datadoghq.com,Datadog,browser_observability,evidence/fourth-alpha-batch.md,moderate,standard,approved,2026-08-30
+browser-intake-datadoghq.com,Datadog,browser_observability,evidence/second-alpha-batch.md,moderate,standard,approved,2026-08-25
+browser-intake-datadoghq.eu,Datadog,browser_observability,evidence/second-alpha-batch.md,moderate,standard,approved,2026-08-25
+browser-intake-ddog-gov.com,Datadog,browser_observability,evidence/fourth-alpha-batch.md,moderate,standard,approved,2026-08-30
+browser-intake-uk1-datadoghq.com,Datadog,browser_observability,evidence/fourth-alpha-batch.md,moderate,standard,approved,2026-08-30
+browser-intake-us2-ddog-gov.com,Datadog,browser_observability,evidence/fourth-alpha-batch.md,moderate,standard,approved,2026-08-30
+browser-intake-us3-datadoghq.com,Datadog,browser_observability,evidence/fourth-alpha-batch.md,moderate,standard,approved,2026-08-30
+browser-intake-us5-datadoghq.com,Datadog,browser_observability,evidence/fourth-alpha-batch.md,moderate,standard,approved,2026-08-30
+c.clarity.ms,Microsoft Clarity,behavioral_analytics,evidence/fourth-alpha-batch.md,moderate,standard,approved,2026-08-30
+cdn.linkedin.oribi.io,LinkedIn,website_analytics,evidence/fifth-alpha-batch.md,moderate,standard,approved,2026-09-24
+d.clarity.ms,Microsoft Clarity,behavioral_analytics,evidence/fourth-alpha-batch.md,moderate,standard,approved,2026-08-30
+dc.ads.linkedin.com,LinkedIn,ad_measurement,evidence/fifth-alpha-batch.md,low-moderate,standard,approved,2026-09-24
+dc.applicationinsights.azure.com,Microsoft Application Insights,application_telemetry,evidence/fourth-alpha-batch.md,moderate,standard,approved,2026-08-30
+dc.applicationinsights.microsoft.com,Microsoft Application Insights,application_telemetry,evidence/fourth-alpha-batch.md,moderate,standard,approved,2026-08-30
+dc.services.visualstudio.com,Microsoft Application Insights,application_telemetry,evidence/fourth-alpha-batch.md,moderate,standard,approved,2026-08-30
+e.clarity.ms,Microsoft Clarity,behavioral_analytics,evidence/fourth-alpha-batch.md,moderate,standard,approved,2026-08-30
+edge.eu1.fullstory.com,FullStory,behavioral_analytics,evidence/fourth-alpha-batch.md,moderate,standard,approved,2026-08-30
+edge.fullstory.com,FullStory,behavioral_analytics,evidence/fourth-alpha-batch.md,moderate,standard,approved,2026-08-30
+events.eu1.segmentapis.com,Twilio Segment,customer_data_analytics,evidence/third-alpha-batch.md,moderate,standard,approved,2026-08-26
+f.clarity.ms,Microsoft Clarity,behavioral_analytics,evidence/fourth-alpha-batch.md,moderate,standard,approved,2026-08-30
+g.clarity.ms,Microsoft Clarity,behavioral_analytics,evidence/fourth-alpha-batch.md,moderate,standard,approved,2026-08-30
+gw.linkedin.oribi.io,LinkedIn,website_analytics,evidence/fifth-alpha-batch.md,moderate,standard,approved,2026-09-24
+h.clarity.ms,Microsoft Clarity,behavioral_analytics,evidence/fourth-alpha-batch.md,moderate,standard,approved,2026-08-30
+i.clarity.ms,Microsoft Clarity,behavioral_analytics,evidence/fourth-alpha-batch.md,moderate,standard,approved,2026-08-30
+j.clarity.ms,Microsoft Clarity,behavioral_analytics,evidence/fourth-alpha-batch.md,moderate,standard,approved,2026-08-30
+js-agent.newrelic.com,New Relic,browser_telemetry,evidence/second-alpha-batch.md,moderate,standard,approved,2026-08-25
+k.clarity.ms,Microsoft Clarity,behavioral_analytics,evidence/fourth-alpha-batch.md,moderate,standard,approved,2026-08-30
+l.clarity.ms,Microsoft Clarity,behavioral_analytics,evidence/fourth-alpha-batch.md,moderate,standard,approved,2026-08-30
+live.applicationinsights.azure.com,Microsoft Application Insights,application_telemetry,evidence/fourth-alpha-batch.md,low-moderate,standard,approved,2026-08-30
+m.clarity.ms,Microsoft Clarity,behavioral_analytics,evidence/fourth-alpha-batch.md,moderate,standard,approved,2026-08-30
+n.clarity.ms,Microsoft Clarity,behavioral_analytics,evidence/fourth-alpha-batch.md,moderate,standard,approved,2026-08-30
+o.clarity.ms,Microsoft Clarity,behavioral_analytics,evidence/fourth-alpha-batch.md,moderate,standard,approved,2026-08-30
+p.adsymptotic.com,LinkedIn,ad_measurement,evidence/fifth-alpha-batch.md,moderate,standard,approved,2026-09-24
+p.clarity.ms,Microsoft Clarity,behavioral_analytics,evidence/fourth-alpha-batch.md,moderate,standard,approved,2026-08-30
+px.ads.linkedin.com,LinkedIn,ad_measurement,evidence/fifth-alpha-batch.md,low-moderate,standard,approved,2026-09-24
+px4.ads.linkedin.com,LinkedIn,ad_measurement,evidence/fifth-alpha-batch.md,low-moderate,standard,approved,2026-09-24
+q.clarity.ms,Microsoft Clarity,behavioral_analytics,evidence/fourth-alpha-batch.md,moderate,standard,approved,2026-08-30
+quota.browser-intake-ap1-datadoghq.com,Datadog,browser_observability,evidence/fourth-alpha-batch.md,low-moderate,standard,approved,2026-08-30
+quota.browser-intake-ap2-datadoghq.com,Datadog,browser_observability,evidence/fourth-alpha-batch.md,low-moderate,standard,approved,2026-08-30
+quota.browser-intake-datadoghq.com,Datadog,browser_observability,evidence/fourth-alpha-batch.md,low-moderate,standard,approved,2026-08-30
+quota.browser-intake-datadoghq.eu,Datadog,browser_observability,evidence/fourth-alpha-batch.md,low-moderate,standard,approved,2026-08-30
+quota.browser-intake-uk1-datadoghq.com,Datadog,browser_observability,evidence/fourth-alpha-batch.md,low-moderate,standard,approved,2026-08-30
+quota.browser-intake-us3-datadoghq.com,Datadog,browser_observability,evidence/fourth-alpha-batch.md,low-moderate,standard,approved,2026-08-30
+quota.browser-intake-us5-datadoghq.com,Datadog,browser_observability,evidence/fourth-alpha-batch.md,low-moderate,standard,approved,2026-08-30
+r.clarity.ms,Microsoft Clarity,behavioral_analytics,evidence/fourth-alpha-batch.md,moderate,standard,approved,2026-08-30
+region1.google-analytics.com,Google Analytics,analytics_telemetry,evidence/initial-alpha.md,low-moderate,standard,approved,2026-08-25
+rs.eu1.fullstory.com,FullStory,behavioral_analytics,evidence/fourth-alpha-batch.md,moderate,standard,approved,2026-08-30
+rs.fullstory.com,FullStory,behavioral_analytics,evidence/fourth-alpha-batch.md,moderate,standard,approved,2026-08-30
+rt.applicationinsights.microsoft.com,Microsoft Application Insights,application_telemetry,evidence/fourth-alpha-batch.md,low-moderate,standard,approved,2026-08-30
+rt.services.visualstudio.com,Microsoft Application Insights,application_telemetry,evidence/fourth-alpha-batch.md,low-moderate,standard,approved,2026-08-30
+s.clarity.ms,Microsoft Clarity,behavioral_analytics,evidence/fourth-alpha-batch.md,moderate,standard,approved,2026-08-30
+script.hotjar.com,Hotjar,behavioral_analytics,evidence/initial-alpha.md,low-moderate,standard,approved,2026-08-25
+sjs.bizographics.com,LinkedIn,audience_measurement,evidence/fifth-alpha-batch.md,moderate,standard,approved,2026-09-24
+snap.licdn.com,LinkedIn,ad_measurement_tag,evidence/fifth-alpha-batch.md,moderate,standard,approved,2026-09-24
+static.hotjar.com,Hotjar,behavioral_analytics,evidence/initial-alpha.md,low-moderate,standard,approved,2026-08-25
+t.clarity.ms,Microsoft Clarity,behavioral_analytics,evidence/fourth-alpha-batch.md,moderate,standard,approved,2026-08-30
+u.clarity.ms,Microsoft Clarity,behavioral_analytics,evidence/fourth-alpha-batch.md,moderate,standard,approved,2026-08-30
+v.clarity.ms,Microsoft Clarity,behavioral_analytics,evidence/fourth-alpha-batch.md,moderate,standard,approved,2026-08-30
+w.clarity.ms,Microsoft Clarity,behavioral_analytics,evidence/fourth-alpha-batch.md,moderate,standard,approved,2026-08-30
+www.clarity.ms,Microsoft Clarity,behavioral_analytics,evidence/initial-alpha.md,moderate,standard,approved,2026-08-25
+www.google-analytics.com,Google Analytics,analytics_telemetry,evidence/initial-alpha.md,low-moderate,standard,approved,2026-08-25
+x.clarity.ms,Microsoft Clarity,behavioral_analytics,evidence/fourth-alpha-batch.md,moderate,standard,approved,2026-08-30
+y.clarity.ms,Microsoft Clarity,behavioral_analytics,evidence/fourth-alpha-batch.md,moderate,standard,approved,2026-08-30
+z.clarity.ms,Microsoft Clarity,behavioral_analytics,evidence/fourth-alpha-batch.md,moderate,standard,approved,2026-08-30

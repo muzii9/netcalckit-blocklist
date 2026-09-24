@@ -1,4 +1,4 @@
-name: Validate blocklist
+name: Validate rule database and blocklist
 
 on:
   push:
@@ -34,11 +34,11 @@ jobs:
       - name: Run pipeline unit tests
         run: python3 -m unittest discover -s tests -v
 
-      - name: Rebuild blocklist
+      - name: Rebuild generated domain files
         run: python3 scripts/build.py
 
       - name: Validate repository data
         run: python3 scripts/validate.py
 
-      - name: Verify generated file is committed
+      - name: Verify generated files are committed
         run: git diff --exit-code
