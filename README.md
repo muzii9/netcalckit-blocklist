@@ -55,6 +55,7 @@ NextDNS and Control D guides are being held back until those platforms are check
 - `evidence/fifth-alpha-batch.md` — evidence and risk notes for the fifth batch
 - `evidence/sixth-alpha-batch.md` — Cloudflare, Heap, and Contentsquare candidate evidence and hold decisions
 - `evidence/seventh-alpha-batch.md` — Pendo candidate evidence, regional endpoints, and hold decisions
+- `evidence/eighth-alpha-batch.md` — Fathom Analytics candidate evidence and promotion gate
 - `docs/domain-policy.md` — evidence and review requirements
 - `docs/alpha-testing.md` — alpha release smoke-test record
 - `docs/adguard-home-testing.md` — isolated AdGuard Home enforcement test
