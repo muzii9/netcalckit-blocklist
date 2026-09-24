@@ -7,6 +7,9 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - Structured `rules/rules.csv` source of truth with vendor, category, evidence, false-positive risk, tier, status, and review-date metadata.
+- Unpublished candidate queue with strict schema validation, deterministic triage scoring, and rule/allowlist conflict detection.
+- Automated DNS health reports for staged candidates and published rules, including a weekly GitHub Actions artifact.
+- Candidate-review CI workflow that generates triage and DNS-health artifacts without auto-publishing candidates.
 - Rule-database parser, metadata unit tests, evidence-reference validation, and cumulative tier support.
 - Automation architecture documentation for GitHub Actions and the isolated home-server test lab.
 - Reusable AdGuard Home verification script with UDP retry, TCP fallback, transport-error separation, and pass-rate reporting.
