@@ -29,7 +29,7 @@ Sources:
 
 These are dedicated Pendo service hosts, but Pendo documents a mixed purpose: event transmission plus guide-metadata retrieval. Because blocking may affect in-app guidance as well as analytics, `essential_function` is left `unknown` and false-positive risk is set to `moderate`.
 
-They remain research candidates rather than automatic Standard additions.
+Human review therefore places all five data hosts on **HOLD**. DNS-level blocking cannot separate event upload from guide-metadata retrieval on the same hostname.
 
 ## SDK hosts held
 
@@ -52,13 +52,14 @@ This batch does not stage:
 - broad `*.pendo.io` wildcards.
 - `stats.pendo.com` regional variants because the reviewed first-party source lists the hosts but does not provide enough purpose detail for a confident classification.
 
-## Promotion gate
+## Final batch decision
 
-Before any Pendo data host can enter Standard it must pass:
+No Pendo hostname from this batch is eligible for Standard at this time.
 
-1. candidate schema validation and deterministic triage,
-2. DNS-health checks,
-3. additional false-positive review focused on applications that use Pendo guides,
-4. isolated AdGuard Home enforcement testing.
+- The five `data.*` hosts are mixed-purpose: event transmission plus guide-metadata retrieval.
+- The five `cdn.*` hosts deliver the Web SDK JavaScript/CSS and can remove Pendo-powered onboarding or help UI.
+- User-facing Pendo app, portal, support, SSO, payment, feedback, and documentation hosts remain excluded entirely.
 
-A high automation score is only a research-priority signal and never an approval decision.
+The candidates stay in the hold queue so they can be reconsidered if Pendo later documents a collector-only hostname that can be blocked without affecting guide delivery.
+
+Automation scores remain research-priority signals only and never override this human false-positive review.
