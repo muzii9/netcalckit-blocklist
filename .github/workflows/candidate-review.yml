@@ -1,0 +1,49 @@
+name: Candidate review
+
+on:
+  pull_request:
+    paths:
+      - "candidates/**"
+      - "rules/**"
+      - "scripts/candidate_db.py"
+      - "scripts/score_candidates.py"
+      - "scripts/validate_candidates.py"
+      - "scripts/check_dns_health.py"
+      - "tests/test_candidate_db.py"
+      - ".github/workflows/candidate-review.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install DNS tools
+        run: sudo apt-get update && sudo apt-get install -y dnsutils
+
+      - name: Validate candidate queue
+        run: python3 scripts/validate_candidates.py
+
+      - name: Score candidate research priority
+        run: python3 scripts/score_candidates.py --output candidate-triage.csv
+
+      - name: Check candidate DNS health
+        run: python3 scripts/check_dns_health.py --candidates --output candidate-dns-health.csv
+
+      - name: Upload candidate review reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: candidate-review-reports
+          path: |
+            candidate-triage.csv
+            candidate-dns-health.csv
