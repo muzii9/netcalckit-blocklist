@@ -17,6 +17,7 @@ All notable changes to this project will be documented in this file.
 - Fifty vendor-documented Clarity, Datadog, FullStory, and Application Insights analytics or observability hosts, with per-rule risk notes.
 - Eight LinkedIn Insight Tag and website-measurement hosts, with official-source evidence and false-positive notes.
 - Fourteen vendor-documented Cloudflare Web Analytics, Heap, and Contentsquare analytics/session-replay hosts; three higher-risk or currently non-resolving candidates remain held.
+- One first-party documented Fathom Analytics client-script hostname, staged through candidate scoring and DNS-health review before isolated enforcement testing.
 
 ## v0.2.0-alpha — 2026-08-25
 
