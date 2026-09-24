@@ -21,7 +21,15 @@ browser-intake-us2-ddog-gov.com
 browser-intake-us3-datadoghq.com
 browser-intake-us5-datadoghq.com
 c.clarity.ms
+c.contentsquare.net
+c.eu.heap-api.com
+c.us.heap-api.com
+cdn.eu.heap-api.com
+cdn.heapanalytics.com
 cdn.linkedin.oribi.io
+cdn.us.heap-api.com
+cloudflareinsights.com
+csxd.contentsquare.net
 d.clarity.ms
 dc.ads.linkedin.com
 dc.applicationinsights.azure.com
@@ -38,6 +46,8 @@ h.clarity.ms
 i.clarity.ms
 j.clarity.ms
 js-agent.newrelic.com
+k-aeu1.contentsquare.net
+k-aus1.contentsquare.net
 k.clarity.ms
 l.clarity.ms
 live.applicationinsights.azure.com
@@ -66,8 +76,12 @@ s.clarity.ms
 script.hotjar.com
 sjs.bizographics.com
 snap.licdn.com
+srm.aa.contentsquare.net
+srm.ba.contentsquare.net
+static.cloudflareinsights.com
 static.hotjar.com
 t.clarity.ms
+t.contentsquare.net
 u.clarity.ms
 v.clarity.ms
 w.clarity.ms
