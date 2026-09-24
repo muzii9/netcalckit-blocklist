@@ -114,3 +114,33 @@ Held:
 ## False-positive policy
 
 Promotion does not claim universal application compatibility. Exact hostnames are preferred, broad vendor apex domains remain excluded, and any credible report of login, payment, update, security, recovery, or core-site breakage takes priority over list growth.
+
+## Isolated AdGuard Home enforcement test
+
+Tested: 2026-09-24
+
+The immutable 87-rule release candidate was loaded into the isolated AdGuard Home test instance and verified through the DNS endpoint on port 5053.
+
+Control result:
+
+- `example.com` resolved normally to public IP addresses.
+
+New-rule spot check:
+
+- `static.cloudflareinsights.com` returned `0.0.0.0`.
+
+Full verifier result:
+
+- Total rules tested: 87
+- Immediate PASS: 83
+- Retry PASS: 4
+- Confirmed blocked: 87
+- Real FAIL: 0
+- DNS errors: 0
+- Confirmed pass rate: 100.00%
+- Final result: `ALL RULES VERIFIED`
+
+The four retry passes were temporary first-attempt UDP misses that succeeded on the verifier's retry path. They were not counted as rule failures.
+
+This confirms DNS enforcement for the 87-rule release candidate in the isolated AdGuard Home lab. It still does not prove universal application compatibility.
+
