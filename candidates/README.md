@@ -35,7 +35,7 @@ The score is **not an approval decision**. It helps sort work:
 
 - `HIGH` — strong research signals; still needs evidence record and compatibility review.
 - `REVIEW` — useful candidate but missing confidence or carrying some risk.
-- `HOLD` — weak evidence, shared/essential infrastructure, or high false-positive risk.
+- `HOLD` — weak evidence, shared/essential infrastructure, high false-positive risk, or an explicit maintainer hold/reject status.
 
 A third-party blocklist hit can create a candidate, but can never by itself make a rule publishable.
 

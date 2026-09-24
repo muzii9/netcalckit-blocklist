@@ -207,7 +207,9 @@ def score_candidate(candidate: Candidate) -> CandidateScore:
         or candidate.false_positive_risk == "high"
     )
 
-    if hard_hold or score <= 3:
+    if candidate.status in {"hold", "rejected"}:
+        band = "HOLD"
+    elif hard_hold or score <= 3:
         band = "HOLD"
     elif score >= 8 and candidate.evidence_type not in {
         "community-report",
