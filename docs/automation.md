@@ -34,18 +34,33 @@ Every push and pull request:
 
 This prevents hand-edited or stale published lists from being merged.
 
-## Home-server test lab
+## Automated AdGuard Home release-candidate lab
 
-The isolated AdGuard Home instance is used for live DNS enforcement checks. `scripts/test_adguard_home.sh`:
+Release-candidate pull requests now use `.github/workflows/adguard-lab.yml` on a GitHub-hosted Ubuntu runner. The job does not touch a user's router, DNS settings, or persistent AdGuard Home instance.
+
+`scripts/run_adguard_lab.sh`:
+
+- starts a pinned disposable AdGuard Home Docker container;
+- binds its web and DNS ports to loopback only;
+- serves the exact checked-out `blocklists/standard.txt` to the container;
+- verifies that AdGuard loaded the expected number of rules;
+- forces null-IP blocking for deterministic checks;
+- runs `scripts/test_adguard_home.sh` against the disposable DNS endpoint;
+- preserves a report and container log as workflow artifacts;
+- removes the disposable container when the job exits.
+
+`scripts/test_adguard_home.sh` still performs the enforcement checks:
 
 - verifies a normal control domain first;
-- tests every published rule;
+- tests every rule;
 - retries temporary UDP failures;
 - falls back to TCP;
 - separates transport errors from actual rule failures;
 - writes a timestamped report.
 
-This proves DNS enforcement. It does not prove universal application compatibility.
+A pull request therefore receives a green or red `AdGuard RC enforcement` check automatically whenever the Standard rule set or the lab itself changes.
+
+This proves DNS enforcement in a fresh AdGuard Home instance. It does not prove universal application compatibility.
 
 ## Human review still required
 

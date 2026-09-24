@@ -1,0 +1,49 @@
+name: AdGuard Home lab
+
+on:
+  pull_request:
+    paths:
+      - "blocklists/standard.txt"
+      - "rules/**"
+      - "allowlists/**"
+      - "scripts/build.py"
+      - "scripts/rule_db.py"
+      - "scripts/domain_utils.py"
+      - "scripts/test_adguard_home.sh"
+      - "scripts/run_adguard_lab.sh"
+      - ".github/workflows/adguard-lab.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: adguard-lab-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  adguard-lab:
+    name: AdGuard RC enforcement
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install DNS tools
+        run: sudo apt-get update && sudo apt-get install -y dnsutils
+
+      - name: Run disposable AdGuard Home lab
+        run: bash scripts/run_adguard_lab.sh
+
+      - name: Upload AdGuard lab reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: adguard-lab-reports
+          path: |
+            netcalckit-adguard-lab-report.txt
+            netcalckit-adguard-container.log
+          if-no-files-found: warn
+          retention-days: 30
