@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- Reusable AdGuard Home verification script with UDP retry, TCP fallback, transport-error separation, and pass-rate reporting.
 - Two Twilio Segment event-ingestion hosts, with vendor documentation and false-positive notes.
 - Fifty vendor-documented Clarity, Datadog, FullStory, and Application Insights analytics or observability hosts, with per-rule risk notes.
 - Eight LinkedIn Insight Tag and website-measurement hosts, with official-source evidence and false-positive notes.
