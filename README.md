@@ -62,6 +62,7 @@ NextDNS and Control D guides are being held back until those platforms are check
 - `scripts/domain_utils.py` — shared domain-file parser
 - `scripts/build.py` — deterministic blocklist builder
 - `scripts/validate.py` — format, ordering, duplicate, overlap, and reproducibility checks
+- `scripts/test_adguard_home.sh` — reusable AdGuard Home DNS enforcement verifier with retry/TCP fallback
 - `tests/test_domain_utils.py` — parser and malformed-input unit tests
 - `.github/workflows/validate.yml` — automatic validation for pushes and pull requests
 - `CONTRIBUTING.md` — contribution guidelines
@@ -69,12 +70,20 @@ NextDNS and Control D guides are being held back until those platforms are check
 
 ## Quick start
 
-Python 3.10 or newer is required. The scripts use only the Python standard library.
+Python 3.10 or newer is required. The Python scripts use only the standard library.
 
 ```bash
 python3 scripts/build.py
 python3 scripts/validate.py
 ```
+
+To verify the published list against an AdGuard Home DNS endpoint:
+
+```bash
+DNS_SERVER=192.168.1.100 DNS_PORT=5053 bash scripts/test_adguard_home.sh
+```
+
+The verifier retries temporary UDP failures, falls back to TCP, and keeps transport errors separate from genuine rule failures.
 
 ## Curation model
 
