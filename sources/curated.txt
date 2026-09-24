@@ -28,6 +28,7 @@ cdn.eu.heap-api.com
 cdn.heapanalytics.com
 cdn.linkedin.oribi.io
 cdn.us.heap-api.com
+cdn.usefathom.com
 cloudflareinsights.com
 csxd.contentsquare.net
 d.clarity.ms
