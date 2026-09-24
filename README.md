@@ -77,10 +77,12 @@ NextDNS and Control D guides are being held back until those platforms are check
 - `scripts/build.py` — deterministic blocklist builder
 - `scripts/validate.py` — format, ordering, duplicate, overlap, and reproducibility checks
 - `scripts/test_adguard_home.sh` — reusable AdGuard Home DNS enforcement verifier with retry/TCP fallback
+- `scripts/run_adguard_lab.sh` — disposable Dockerized AdGuard Home release-candidate lab
 - `tests/test_domain_utils.py` — parser and malformed-input unit tests
 - `tests/test_candidate_db.py` — candidate validation and scoring tests
 - `tests/test_rule_db.py` — structured metadata, sorting, status, date, and tier tests
 - `.github/workflows/validate.yml` — automatic validation for pushes and pull requests
+- `.github/workflows/adguard-lab.yml` — automatic isolated AdGuard Home enforcement gate for release-candidate pull requests
 - `CONTRIBUTING.md` — contribution guidelines
 - `CHANGELOG.md` — project history
 
