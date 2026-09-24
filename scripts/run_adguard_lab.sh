@@ -83,7 +83,12 @@ curl -fsS -u 'ci:netcalckit-ci-only' "http://127.0.0.1:$WEB_PORT/control/status"
 
 curl -fsS -u 'ci:netcalckit-ci-only' -X POST     -H 'Content-Type: application/json'     --data '{"blocking_mode":"null_ip","protection_enabled":true}'     "http://127.0.0.1:$WEB_PORT/control/dns_config" >/dev/null
 
-filter_url="http://host.docker.internal:$SOURCE_PORT/blocklists/standard.txt"
+docker_gateway="$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.Gateway}}{{end}}' "$container")"
+if [[ -z "$docker_gateway" ]]; then
+    echo "ERROR: could not determine Docker bridge gateway." >&2
+    exit 5
+fi
+filter_url="http://$docker_gateway:$SOURCE_PORT/blocklists/standard.txt"
 filter_payload="$(printf '{"name":"NetCalcKit Standard RC","url":"%s","whitelist":false}' "$filter_url")"
 
 curl -fsS -u 'ci:netcalckit-ci-only' -X POST     -H 'Content-Type: application/json'     --data "$filter_payload"     "http://127.0.0.1:$WEB_PORT/control/filtering/add_url" >/dev/null
