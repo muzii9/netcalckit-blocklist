@@ -40,14 +40,22 @@ This batch does not add:
 - broad `usefathom.com` or wildcard rules
 - any inferred collector hostname that is not explicitly supported by reviewed first-party documentation
 
+## Automated review
+
+GitHub Actions candidate review passed on 2026-09-24:
+
+- Candidate triage: HIGH 1, REVIEW 0, HOLD 13
+- `cdn.usefathom.com`: HIGH, score 9
+- DNS health: 13 resolving, 1 no-address, 0 errors
+
+The no-address result belongs to a previously held candidate, not the Fathom hostname.
+
 ## Promotion gate
 
-Before publication the candidate must pass:
+The Fathom candidate passed schema validation, deterministic scoring, and DNS-health checks. Before publication it still requires:
 
-1. candidate validation and deterministic scoring,
-2. current DNS-health checks,
-3. isolated AdGuard Home enforcement testing,
-4. a control-domain check,
-5. final false-positive review.
+1. isolated AdGuard Home enforcement testing,
+2. a control-domain check,
+3. final false-positive review.
 
 Automation scores are research-priority signals only and do not auto-approve the rule.
