@@ -2,7 +2,7 @@
 
 A small open-source DNS blocklist for ads, trackers, and telemetry.
 
-> **Status:** v0.2.0-alpha is published as a prerelease. The current `main` list contains 65 analytics, telemetry, and observability hostnames. The published v0.2.0-alpha release contains 13 rules.
+> **Status:** v0.2.0-alpha is published as a prerelease. The current `main` list contains 73 analytics, telemetry, advertising-measurement, and observability hostnames. The published v0.2.0-alpha release contains 13 rules.
 
 ## Subscribe
 
@@ -47,6 +47,8 @@ NextDNS and Control D guides are being held back until those platforms are check
 - `evidence/initial-alpha.md` — evidence and risk notes for the first alpha batch
 - `evidence/second-alpha-batch.md` — evidence and risk notes for the second batch
 - `evidence/third-alpha-batch.md` — evidence and risk notes for the third batch
+- `evidence/fourth-alpha-batch.md` — evidence and risk notes for the fourth batch
+- `evidence/fifth-alpha-batch.md` — evidence and risk notes for the fifth batch
 - `docs/domain-policy.md` — evidence and review requirements
 - `docs/alpha-testing.md` — alpha release smoke-test record
 - `docs/adguard-home-testing.md` — isolated AdGuard Home enforcement test
