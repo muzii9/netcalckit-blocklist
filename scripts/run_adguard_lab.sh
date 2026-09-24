@@ -12,6 +12,7 @@ SETUP_PORT="${SETUP_PORT:-53000}"
 SOURCE_PORT="${SOURCE_PORT:-58081}"
 CONTROL_DOMAIN="${CONTROL_DOMAIN:-example.com}"
 REPORT="${REPORT:-$PWD/netcalckit-adguard-lab-report.txt}"
+LAB_LOG="${LAB_LOG:-$PWD/netcalckit-adguard-container.log}"
 
 for command_name in docker curl dig python3 grep awk; do
     if ! command -v "$command_name" >/dev/null 2>&1; then
@@ -35,6 +36,9 @@ cleanup() {
     if [[ -n "$http_pid" ]]; then
         kill "$http_pid" >/dev/null 2>&1 || true
         wait "$http_pid" >/dev/null 2>&1 || true
+    fi
+    if docker inspect "$container" >/dev/null 2>&1; then
+        docker logs "$container" >"$LAB_LOG" 2>&1 || true
     fi
     docker rm -f "$container" >/dev/null 2>&1 || true
     rm -rf "$lab_dir"
