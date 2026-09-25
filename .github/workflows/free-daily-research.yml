@@ -20,6 +20,19 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Optional free-tier AI research
+        continue-on-error: true
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
+        run: python3 scripts/free_ai_research.py
+      - name: Upload AI research report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: free-ai-research-report
+          path: research/ai-research-report.json
+          if-no-files-found: ignore
       - name: Run conservative documentation scan
         run: python3 scripts/free_research.py
       - name: Create evidence and branch only if new candidates exist
