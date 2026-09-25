@@ -24,6 +24,14 @@ No automated promotion or merge is permitted.
 
 ## Optional Gemini + Tavily research (free quotas only)
 
-Add repository Actions secrets `GEMINI_API_KEY` and `TAVILY_API_KEY`. The workflow makes at most three basic Tavily searches and three Gemini analysis requests per daily run, then uploads `free-ai-research-report` as a workflow artifact. Gemini model: `gemini-2.5-flash-lite`; model availability and free-tier quotas must be confirmed in your own account. API failures do not automatically trigger paid fallback.
+Add repository Actions secrets `GEMINI_API_KEY` and `TAVILY_API_KEY`. The workflow makes at most 24 basic Tavily searches and six Gemini analysis requests per daily run, then uploads `free-ai-research-report` as a workflow artifact. Gemini model: `gemini-2.5-flash-lite`; model availability and free-tier quotas must be confirmed in your own account. API failures do not automatically trigger paid fallback.
 
 AI suggestions are **not** added to the candidate database: they are report-only, remain unverified HOLD suggestions, and require independent first-party documentation review. The deterministic scanner separately stages only documented hostnames as HOLD. Never enable paid billing just to run this workflow; watch both providers' dashboards for quota changes.
+
+### Verified free-tier budgeting (September 2026)
+
+Tavily Researcher includes 1,000 free credits per calendar month. Basic search costs 1 credit; advanced costs 2. This pilot performs 24 **basic** searches per day, maximum 744 in a 31-day month, leaving 256 credits for safety. If this key is shared with other projects, reduce the daily budget accordingly. Do not upgrade or enable pay-as-you-go. Tavily resets on the first of each month.
+
+Gemini 2.5 Flash-Lite is listed with free-tier text usage, but per-project request/day and token limits vary; inspect the actual project in Google AI Studio. Six AI analysis calls per day (186 in a 31-day month) is a conservative initial cap, **not** a claim that every project has that quota. Failed or rate-limited calls are logged and must never trigger paid fallback. Gemini's own search grounding is not enabled; Tavily supplies excerpts.
+
+The initial registry contains three vendors, so 24 search variations/day may overlap. Expand official vendor coverage and deduplicate research results during the pilot before treating search volume as useful discovery.
