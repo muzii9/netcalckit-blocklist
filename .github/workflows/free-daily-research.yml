@@ -1,0 +1,87 @@
+name: Free daily candidate research (pilot)
+on:
+  schedule:
+    - cron: '17 3 * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+  pull-requests: write
+concurrency:
+  group: free-research
+  cancel-in-progress: false
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run conservative documentation scan
+        run: python3 scripts/free_research.py
+      - name: Create evidence and branch only if new candidates exist
+        id: stage
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- candidates/candidates.csv; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          python3 scripts/validate_candidates.py
+          python3 - <<'PY'
+          import json
+          from datetime import date
+          from pathlib import Path
+          result = json.loads(Path('research/discoveries.json').read_text())
+          stamp = date.today().isoformat()
+          path = Path('evidence') / ('automated-' + stamp + '.md')
+          lines = ['# Automated documentation scan — ' + stamp, '',
+                   'Discovery only. Every candidate is HOLD. Exact endpoint purpose, DNS health,',
+                   'compatibility and first-party evidence context require human verification.', '']
+          for item in result['new']:
+              lines.extend(['## ' + item['hostname'], '',
+                            'Vendor: ' + item['vendor'], '',
+                            'Documentation page: ' + item['evidence_url'], '',
+                            'Decision: HOLD; no promotion or release-candidate changes.', ''])
+          path.write_text('\n'.join(lines) + '\n')
+          PY
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+          echo "evidence=evidence/automated-$(date -u +%F).md" >> "$GITHUB_OUTPUT"
+      - name: Open draft research PR
+        if: steps.stage.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          branch="research/auto-$(date -u +%F)-${GITHUB_RUN_ID}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$branch"
+          git add candidates/candidates.csv "${{ steps.stage.outputs.evidence }}"
+          git commit -m "Stage documented endpoint discoveries as HOLD"
+          git push origin "$branch"
+          gh pr create --draft --base main --head "$branch" \
+            --title "Automated HOLD-only research $(date -u +%F)" \
+            --body "Documentation-text discovery only. All new endpoints are HOLD. Review source context, candidate CI/DNS artifact, and false-positive safety before any promotion. No changes to published rules."
+      - name: Telegram pilot notification
+        if: always()
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          JOB_STATUS: ${{ job.status }}
+        shell: bash
+        run: |
+          if [[ -z "$TELEGRAM_BOT_TOKEN" || -z "$TELEGRAM_CHAT_ID" ]]; then
+            echo "Telegram secrets not configured; notification skipped."
+            exit 0
+          fi
+          msg="NetCalcKit free research: ${JOB_STATUS}. New HOLD candidates: ${{ steps.stage.outputs.changed == 'true' && 'see draft PR' || 'none or scan failed' }}. Runs: https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          curl --fail --silent --show-error --retry 2 \
+            --data-urlencode "chat_id=$TELEGRAM_CHAT_ID" \
+            --data-urlencode "text=$msg" \
+            "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" >/dev/null
