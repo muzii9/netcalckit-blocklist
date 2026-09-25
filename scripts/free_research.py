@@ -16,7 +16,20 @@ ALLOW = ROOT / "allowlists/allowlist.txt"
 OUT = ROOT / "research/discoveries.json"
 HOST = re.compile(r"(?<![\w.-])(?:[a-z0-9-]+\.)+[a-z]{2,}(?![\w.-])", re.I)
 SKIP = re.compile(r"(^|[.-])(auth|login|account|payment|billing|update|security|recovery|cdn|static|dashboard|api-gateway)([.-]|$)", re.I)
+# Fail closed: explicit host roles, not merely vendor-owned domains.
+# Agent endpoints are left for human review; admin/support/CDN/feedback are not candidates.
+SAFE_LABELS = {"collect", "collector", "ingest", "events", "event", "track", "tracking", "telemetry", "beacon", "srm"}
+BLOCK_LABELS = {"academy", "support", "developers", "portal", "app", "dashboard",
+                "feedback", "content", "software", "mobile", "api", "engageapi",
+                "pendoapi", "agent", "cdn", "data", "login", "auth", "payment"}
 MAX_NEW = 30
+
+def plausible_collector(host):
+    labels = set(host.split("."))
+    if labels & BLOCK_LABELS:
+        return False
+    return bool(labels & SAFE_LABELS)
+
 
 def read_csv(path):
     with path.open(newline="", encoding="utf-8") as f:
@@ -50,7 +63,7 @@ def main():
             suffixes = source["allowed_suffixes"]
             if not any(host.endswith("." + suffix) for suffix in suffixes):
                 continue  # no broad apex; only explicit vendor suffixes
-            if host in known or SKIP.search(host) or host.startswith("www."):
+            if host in known or SKIP.search(host) or host.startswith("www.") or not plausible_collector(host):
                 continue
             # Require literal appearance in rendered documentation text; still NOT approval.
             row = dict.fromkeys(candidates[0].keys() if candidates else [
@@ -62,7 +75,7 @@ def main():
                 shared_infrastructure="unknown", essential_function="unknown",
                 false_positive_risk="unknown", status="hold",
                 observed_date=date.today().isoformat(),
-                notes="Automated documentation-text discovery only; HOLD until human confirms endpoint purpose and false-positive safety")
+                notes="Plausible collection hostname in vendor docs; HOLD: confirm exact event collection role and essential functionality manually")
             candidates.append(row)
             known.add(host)
             added.append({"hostname": host, "vendor": source["vendor"], "evidence_url": url})
