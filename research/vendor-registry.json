@@ -1,0 +1,22 @@
+{
+  "sources": [
+    {
+      "vendor": "Pendo",
+      "category": "product_analytics",
+      "url": "https://support.pendo.io/hc/en-us/articles/21338207825307-Host-name-list-for-Pendo-subscriptions-in-restricted-network-environments",
+      "allowed_suffixes": ["pendo.io"]
+    },
+    {
+      "vendor": "Contentsquare",
+      "category": "session_replay",
+      "url": "https://docs.contentsquare.com/en/web/requests/",
+      "allowed_suffixes": ["contentsquare.net"]
+    },
+    {
+      "vendor": "Heap",
+      "category": "product_analytics",
+      "url": "https://developers.heap.io/docs/web",
+      "allowed_suffixes": ["heap-api.com", "heapanalytics.com"]
+    }
+  ]
+}
