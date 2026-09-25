@@ -24,16 +24,35 @@ def main():
         return 0
     sources = json.loads(REGISTRY.read_text())["sources"]
     findings, errors = [], []
-    # Three bounded basic searches/day initially, to protect free quotas.
-    for source in sources[:3]:
+    # 24 basic searches/day = at most 744 credits in a 31-day month.
+    # Reserve at least 256 of the 1,000 free monthly credits.
+    queries = [
+        "official collection ingest hostname documentation",
+        "tracking endpoint domain SDK configuration official",
+        "analytics API endpoint domain official docs",
+        "data collection domains network allowlist documentation",
+        "event capture endpoint hostname configuration",
+        "regional ingestion hosts official documentation",
+        "telemetry endpoint network firewall allowlist",
+        "session recording collection hostname docs",
+    ]
+    for index in range(24):
+        source = sources[index % len(sources)]
+        query = queries[(index // len(sources)) % len(queries)]
         try:
             search = post("https://api.tavily.com/search",
-                {"api_key": tavily, "query": source["vendor"] + " official analytics collection endpoint hostname documentation",
+                {"api_key": tavily, "query": source["vendor"] + " " + query,
                  "search_depth": "basic", "max_results": 3, "include_answer": False},
                 {})
             hits = [{"url": h.get("url", ""), "title": h.get("title", ""),
                      "content_excerpt": h.get("content", "")[:700]}
                     for h in search.get("results", [])[:3]]
+            # Analyze every fourth search (six Gemini requests/day).
+            if index % 4 != 0:
+                findings.append({"vendor": source["vendor"], "query": query,
+                                 "search_hits": hits, "ai_suggestions": [],
+                                 "unresolved_questions": ["Not AI-reviewed; human verification required"]})
+                continue
             # Gemini response is untrusted research commentary; never promoted automatically.
             prompt = ("You are a conservative DNS blocklist research assistant. Analyze these search excerpts. "
                 "Return concise JSON with keys vendor, candidate_hosts (array of {hostname, source_url, "
@@ -57,11 +76,11 @@ def main():
                 if (host and host in corpus and
                     any(host.endswith("." + suffix) for suffix in source["allowed_suffixes"])):
                     safe.append({**item, "hostname": host, "status": "hold_unverified"})
-            findings.append({"vendor": source["vendor"], "search_hits": hits,
+            findings.append({"vendor": source["vendor"], "query": query, "search_hits": hits,
                              "ai_suggestions": safe[:10],
                              "unresolved_questions": analysis.get("unresolved_questions", [])})
         except Exception as exc:
-            errors.append({"vendor": source["vendor"], "error_type": type(exc).__name__})
+            errors.append({"vendor": source["vendor"], "query": query, "error_type": type(exc).__name__})
     OUTPUT.parent.mkdir(exist_ok=True)
     OUTPUT.write_text(json.dumps({"date": date.today().isoformat(), "findings": findings,
         "errors": errors, "disclaimer": "AI suggestions are unverified and never automatically blocklisted."},
