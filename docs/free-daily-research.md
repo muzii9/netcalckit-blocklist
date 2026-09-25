@@ -21,3 +21,9 @@ GitHub Actions may require Settings > Actions > General > Workflow permissions: 
 Review daily workflow runs and draft PRs. Inspect candidate-review artifacts for DNS health, validate the documentation context manually, and record false-positive concerns. A clean DNS result does not prove a hostname is safe to block. If documentation fetch fails, the scanner records an error and does not fabricate evidence.
 
 No automated promotion or merge is permitted.
+
+## Optional Gemini + Tavily research (free quotas only)
+
+Add repository Actions secrets `GEMINI_API_KEY` and `TAVILY_API_KEY`. The workflow makes at most three basic Tavily searches and three Gemini analysis requests per daily run, then uploads `free-ai-research-report` as a workflow artifact. Gemini model: `gemini-2.5-flash-lite`; model availability and free-tier quotas must be confirmed in your own account. API failures do not automatically trigger paid fallback.
+
+AI suggestions are **not** added to the candidate database: they are report-only, remain unverified HOLD suggestions, and require independent first-party documentation review. The deterministic scanner separately stages only documented hostnames as HOLD. Never enable paid billing just to run this workflow; watch both providers' dashboards for quota changes.
