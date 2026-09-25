@@ -47,12 +47,7 @@ def main():
             hits = [{"url": h.get("url", ""), "title": h.get("title", ""),
                      "content_excerpt": h.get("content", "")[:700]}
                     for h in search.get("results", [])[:3]]
-            # Analyze every fourth search (six Gemini requests/day).
-            if index % 4 != 0:
-                findings.append({"vendor": source["vendor"], "query": query,
-                                 "search_hits": hits, "ai_suggestions": [],
-                                 "unresolved_questions": ["Not AI-reviewed; human verification required"]})
-                continue
+            # Analyze all 24 searches under this project's 500 RPD quota.
             # Gemini response is untrusted research commentary; never promoted automatically.
             prompt = ("You are a conservative DNS blocklist research assistant. Analyze these search excerpts. "
                 "Return concise JSON with keys vendor, candidate_hosts (array of {hostname, source_url, "
@@ -62,7 +57,7 @@ def main():
                 "Only suggest exact hostnames that appear literally in the supplied search excerpts. "
                 "Vendor: " + source["vendor"] + ". Excerpts: " + json.dumps(hits))
             response = post(
-                "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent",
+                "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent",
                 {"contents": [{"parts": [{"text": prompt}]}],
                  "generationConfig": {"temperature": 0, "responseMimeType": "application/json", "maxOutputTokens": 1200}},
                 {"x-goog-api-key": gemini})
