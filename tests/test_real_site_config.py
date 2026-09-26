@@ -58,13 +58,21 @@ class LiveSiteConfigTests(unittest.TestCase):
     def test_manifest_rejects_private_query_and_http(self):
         for bad_url in ("http://www.ctvnews.ca/",
                         "https://www.ctvnews.ca/?api_key=secret",
-                        "https://person:secret@www.ctvnews.ca/"):
+                        "https://person:secret@www.ctvnews.ca/",
+                        "https://localhost/",
+                        "https://www.ctvnews.ca:8443/"):
             with self.subTest(url=bad_url):
                 c = self.case()
                 c["pages"] = [bad_url]
                 manifest, rules = self.write_fixture(c)
                 with self.assertRaises(ValueError):
                     smoke.load_cases(manifest, rules)
+
+    def test_manifest_rejects_empty_registry(self):
+        manifest, rules = self.write_fixture(self.case())
+        manifest.write_text(json.dumps({"schema_version": 1, "cases": []}), encoding="utf-8")
+        with self.assertRaises(ValueError):
+            smoke.load_cases(manifest, rules)
 
     def test_manifest_rejects_duplicate_hosts(self):
         c = self.case()
