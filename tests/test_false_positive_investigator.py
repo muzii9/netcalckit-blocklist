@@ -63,7 +63,7 @@ class TestPolicy(unittest.TestCase):
         new={"a.example.org","b.example.org","c.example.org","d.example.org"}
         selected,omitted=m.select_targets(self.config,CANDIDATES,REGISTRY,new,week=2)
         self.assertEqual(len(selected),3)
-        self.assertEqual(omitted,{"d.example.org"})
+        self.assertEqual(omitted,["d.example.org"])
 
     def test_rotating_hold_when_capacity_available(self):
         small={**self.config,"targets":[],"max_hosts_per_run":3}
