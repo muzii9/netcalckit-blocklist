@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {
+      "vendor": "Chartbeat",
+      "host": "ping.chartbeat.net",
+      "wait_seconds": 18,
+      "pages": [
+        "https://www.ctvnews.ca/",
+        "https://thehill.com/",
+        "https://www.aljazeera.com/"
+      ]
+    },
+    {
+      "vendor": "Simple Analytics",
+      "host": "queue.simpleanalyticscdn.com",
+      "wait_seconds": 8,
+      "pages": [
+        "https://autoevents.simpleanalytics.com/",
+        "https://www.simpleanalytics.com/"
+      ]
+    }
+  ]
+}
