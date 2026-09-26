@@ -1,0 +1,35 @@
+name: Candidate public-site reconnaissance
+
+on:
+  pull_request:
+    paths:
+      - "scripts/probe_candidate_sites.py"
+      - ".github/workflows/probe-candidates.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  public-baseline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 9
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Check browser availability
+        run: which google-chrome || which google-chrome-stable || which chromium
+      - name: Install browser bindings
+        run: python -m pip install playwright==1.55.0
+      - name: Probe public baseline without intercepting or fabricating requests
+        run: python scripts/probe_candidate_sites.py
+      - name: Save sanitized baseline observations
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: candidate-public-baseline
+          path: qa-reports/
+          retention-days: 30
+          if-no-files-found: warn
