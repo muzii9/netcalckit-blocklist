@@ -23,7 +23,7 @@ def approved_from_csv(raw):
 
 def load_cases(path=CASES_FILE, rules_path=RULES_FILE):
     data = json.loads(path.read_text(encoding="utf-8"))
-    if data.get("schema_version") != 1 or not isinstance(data.get("cases"), list):
+    if data.get("schema_version") != 1 or not isinstance(data.get("cases"), list) or not data["cases"]:
         raise ValueError("Expected live-site cases schema_version 1 and cases array")
     approved = approved_from_csv(rules_path.read_text(encoding="utf-8"))
     seen = set()
@@ -48,7 +48,10 @@ def load_cases(path=CASES_FILE, rules_path=RULES_FILE):
                 raise ValueError("Browser case URL must be HTTPS text")
             parsed = urlsplit(url)
             if (parsed.scheme != "https" or not parsed.hostname or parsed.username
-                    or parsed.password or parsed.query or parsed.fragment):
+                    or parsed.password or parsed.query or parsed.fragment
+                    or not HOST_PATTERN.fullmatch(parsed.hostname)
+                    or parsed.hostname.endswith((".local", ".internal", ".test", ".invalid"))
+                    or parsed.port is not None):
                 raise ValueError("Use public HTTPS URLs without credentials or query data")
         seen.add(target)
         cases.append((vendor, target, seconds, pages))
