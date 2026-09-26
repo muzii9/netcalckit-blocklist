@@ -15,7 +15,7 @@ REGISTRY = ROOT / "research/vendor-registry.json"
 QUEUE = ROOT / "candidates/candidates.csv"
 RULES = ROOT / "rules/rules.csv"
 MAX_SEARCHES = 8
-HOST = re.compile(r"(?<![\\w.-])(?:[a-z0-9-]+\\.)+[a-z]{2,}(?![\\w.-])", re.I)
+HOST = re.compile(r"(?<![\w.-])(?:[a-z0-9-]+\.)+[a-z]{2,}(?![\w.-])", re.I)
 
 def known_hosts():
     known = set()
