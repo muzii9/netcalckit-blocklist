@@ -133,12 +133,12 @@ if grep -qx 'ct.pinterest.com' blocklists/standard.txt; then
     extra_control=''
     for _ in {1..3}; do
         extra_control="$(dig @127.0.0.1 -p "$DNS_PORT" www.pinterest.com A +short +time=3 +tries=1 || true)"
-        if printf '%s\n' "$extra_control" | awk '/^[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+$/ && $0 != "0.0.0.0" { found=1 } END { exit !found }'; then
+        if printf '%s\n' "$extra_control" | awk '/^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$/ && $0 != "0.0.0.0" { found=1 } END { exit !found }'; then
             break
         fi
         sleep 1
     done
-    if ! printf '%s\n' "$extra_control" | awk '/^[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+$/ && $0 != "0.0.0.0" { found=1 } END { exit !found }'; then
+    if ! printf '%s\n' "$extra_control" | awk '/^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$/ && $0 != "0.0.0.0" { found=1 } END { exit !found }'; then
         echo 'ERROR: www.pinterest.com did not resolve to a public A address with the proposed ct rule active.' >&2
         exit 5
     fi
