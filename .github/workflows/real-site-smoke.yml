@@ -1,0 +1,35 @@
+name: Live public-site A/B smoke
+
+on:
+  pull_request:
+    paths:
+      - "scripts/real_site_smoke.py"
+      - ".github/workflows/real-site-smoke.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Check preinstalled Chrome
+        run: which google-chrome || which google-chrome-stable || which chromium
+      - name: Install Playwright bindings
+        run: python -m pip install playwright==1.55.0
+      - name: Run real public-site comparisons
+        run: python scripts/real_site_smoke.py
+      - name: Upload sanitized test report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: live-site-browser-smoke
+          path: qa-reports/
+          if-no-files-found: warn
+          retention-days: 30
