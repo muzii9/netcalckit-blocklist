@@ -93,6 +93,17 @@ class LiveSiteConfigTests(unittest.TestCase):
         self.assertEqual(added, {"queue.simpleanalyticscdn.com"})
         self.assertEqual(mocked.call_args.args[0][0:2], ["git", "show"])
 
+    def test_aggressive_only_rules_do_not_trigger_standard_gate(self):
+        temp = tempfile.TemporaryDirectory()
+        self.addCleanup(temp.cleanup)
+        rules = Path(temp.name) / "rules.csv"
+        aggressive = "advanced.example.com,Vendor,telemetry,evidence/x.md,high,aggressive,approved,2026-09-26\n"
+        rules.write_text(BASE_CSV + ROW + aggressive, encoding="utf-8")
+        with patch.object(smoke.subprocess, "run",
+                          return_value=SimpleNamespace(stdout=BASE_CSV + ROW)):
+            added = smoke.newly_approved_hosts("a" * 40, rules)
+        self.assertEqual(added, set())
+
     def test_manual_run_does_not_invent_changes(self):
         self.assertEqual(smoke.newly_approved_hosts(""), set())
 
