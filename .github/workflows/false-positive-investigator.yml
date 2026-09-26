@@ -1,0 +1,55 @@
+name: Automated false-positive investigation
+
+on:
+  pull_request:
+    paths:
+      - "rules/rules.csv"
+      - "candidates/candidates.csv"
+      - "blocklists/standard.txt"
+      - "tests/live-site-cases.json"
+      - "tests/false-positive-investigator.json"
+      - "tests/test_false_positive_investigator.py"
+      - "scripts/false_positive_investigator.py"
+      - ".github/workflows/false-positive-investigator.yml"
+  workflow_dispatch:
+  schedule:
+    - cron: "15 4 * * 4" # Thu 09:15 PKT (UTC+5)
+
+permissions:
+  contents: read
+
+concurrency:
+  group: false-positive-\${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  investigate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 16
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Compare new Standard proposals with PR base.
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Check fail-closed investigator policy offline
+        run: python -m unittest discover -s tests -p 'test_false_positive_investigator.py' -v
+      - name: Check preinstalled Chrome
+        run: which google-chrome || which google-chrome-stable || which chromium
+      - name: Install pinned browser bindings
+        run: python -m pip install playwright==1.55.0
+      - name: Run read-only public-site investigation
+        env:
+          FP_BASE_SHA: \${{ github.event.pull_request.base.sha }}
+        run: python scripts/false_positive_investigator.py --strict-new
+      - name: Archive sanitized classification and per-trial measurements
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: false-positive-investigation
+          path: |
+            qa-reports/false-positive-investigation.json
+            qa-reports/false-positive-investigation.md
+          retention-days: 21
+          if-no-files-found: warn
