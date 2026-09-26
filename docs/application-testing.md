@@ -124,3 +124,18 @@ These rules must not be described as application-cleared merely because direct D
 3. removal of the rule if material breakage is confirmed or the exact-host evidence becomes ambiguous.
 
 A synthetic page that directly requests a collector can prove enforcement but cannot prove real application compatibility, so it is not counted as an application test.
+
+## 2026-09-26 — First 90-rule collector expansion: live public-site A/B smoke
+
+Workflow report: https://github.com/muzii9/netcalckit-blocklist/actions/runs/36260337322 (artifact: `live-site-browser-smoke`).
+
+An isolated headless Chrome instance loaded each public page once normally, then in a fresh browser context that failed requests **only** to the listed exact hostname, using browser network interception (`namenotresolved`). The corresponding host had to appear in ordinary baseline network requests before the comparison counted. The test compared HTTP status, visible document title, readable body length, H1 presence where applicable, and link count. It did not exercise accounts, form submission, personalization, payment, video playback or an actual subscribed DNS provider.
+
+| Exact rule exercised | Public site | Baseline requests | Requests intercepted | Baseline vs blocked public-page observation | Classification |
+| --- | --- | ---: | ---: | --- | --- |
+| `ping.chartbeat.net` | `https://www.ctvnews.ca/` | 6 | 6 | HTTP 200 in both modes; readable body 15,068 characters in both; 471 links in both; document title retained | Preliminary core-render smoke pass |
+| `queue.simpleanalyticscdn.com` | `https://autoevents.simpleanalytics.com/` | 1 | 1 | HTTP 200 in both modes; readable body 272 characters in both; 3 links in both; document title retained | Preliminary core-render smoke pass |
+
+An additional `https://www.aljazeera.com/` baseline requested `ping.chartbeat.net` twice, but its readable body was empty in the automation environment; it was excluded from compatibility evidence rather than counted as a pass.
+
+**Limits:** These preliminary passes demonstrate that the exact hosts were naturally requested and that basic page rendering/navigation presence was unchanged on two **specific** public pages during this one run. They do not establish universal application compatibility, full feature behavior, privacy outcomes, or equivalence of browser interception to a real DNS deployment. Real false-positive reports should be reproduced using the per-host protocol in `docs/false-positive-testing.md`. The newly added rules remain reviewable and removable if material breakage is reproduced.
