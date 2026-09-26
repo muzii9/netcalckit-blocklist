@@ -19,7 +19,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: false-positive-\${{ github.ref }}
+  group: false-positive-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -41,7 +41,7 @@ jobs:
         run: python -m pip install playwright==1.55.0
       - name: Run read-only public-site investigation
         env:
-          FP_BASE_SHA: \${{ github.event.pull_request.base.sha }}
+          FP_BASE_SHA: ${{ github.event.pull_request.base.sha }}
         run: python scripts/false_positive_investigator.py --strict-new
       - name: Archive sanitized classification and per-trial measurements
         if: always()
