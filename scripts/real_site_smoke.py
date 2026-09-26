@@ -15,7 +15,7 @@ from urllib.parse import urlsplit
 ROOT = Path(__file__).resolve().parents[1]
 CASES_FILE = ROOT / "tests" / "live-site-cases.json"
 RULES_FILE = ROOT / "rules" / "rules.csv"
-HOST_PATTERN = re.compile(r"(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z]{2,}")
+HOST_PATTERN = re.compile(r"(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z]{2,}")
 
 def approved_from_csv(raw):
     return {row["domain"] for row in csv.DictReader(io.StringIO(raw))
