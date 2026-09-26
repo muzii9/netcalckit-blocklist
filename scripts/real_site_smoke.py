@@ -19,7 +19,7 @@ HOST_PATTERN = re.compile(r"(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z]{2,}")
 
 def approved_from_csv(raw):
     return {row["domain"] for row in csv.DictReader(io.StringIO(raw))
-            if row["status"] == "approved"}
+            if row["status"] == "approved" and row["tier"] in {"lite", "standard"}}
 
 def load_cases(path=CASES_FILE, rules_path=RULES_FILE):
     data = json.loads(path.read_text(encoding="utf-8"))
