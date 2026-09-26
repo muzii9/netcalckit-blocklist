@@ -53,9 +53,11 @@ n.clarity.ms,Microsoft Clarity,behavioral_analytics,evidence/fourth-alpha-batch.
 o.clarity.ms,Microsoft Clarity,behavioral_analytics,evidence/fourth-alpha-batch.md,moderate,standard,approved,2026-08-30
 p.adsymptotic.com,LinkedIn,ad_measurement,evidence/fifth-alpha-batch.md,moderate,standard,approved,2026-09-24
 p.clarity.ms,Microsoft Clarity,behavioral_analytics,evidence/fourth-alpha-batch.md,moderate,standard,approved,2026-08-30
+ping.chartbeat.net,Chartbeat,web_analytics,evidence/first-collector-expansion.md,moderate,standard,approved,2026-09-26
 px.ads.linkedin.com,LinkedIn,ad_measurement,evidence/fifth-alpha-batch.md,low-moderate,standard,approved,2026-09-24
 px4.ads.linkedin.com,LinkedIn,ad_measurement,evidence/fifth-alpha-batch.md,low-moderate,standard,approved,2026-09-24
 q.clarity.ms,Microsoft Clarity,behavioral_analytics,evidence/fourth-alpha-batch.md,moderate,standard,approved,2026-08-30
+queue.simpleanalyticscdn.com,Simple Analytics,web_analytics,evidence/first-collector-expansion.md,low-moderate,standard,approved,2026-09-26
 quota.browser-intake-ap1-datadoghq.com,Datadog,browser_observability,evidence/fourth-alpha-batch.md,low-moderate,standard,approved,2026-08-30
 quota.browser-intake-ap2-datadoghq.com,Datadog,browser_observability,evidence/fourth-alpha-batch.md,low-moderate,standard,approved,2026-08-30
 quota.browser-intake-datadoghq.com,Datadog,browser_observability,evidence/fourth-alpha-batch.md,low-moderate,standard,approved,2026-08-30

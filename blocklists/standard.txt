@@ -59,9 +59,11 @@ n.clarity.ms
 o.clarity.ms
 p.adsymptotic.com
 p.clarity.ms
+ping.chartbeat.net
 px.ads.linkedin.com
 px4.ads.linkedin.com
 q.clarity.ms
+queue.simpleanalyticscdn.com
 quota.browser-intake-ap1-datadoghq.com
 quota.browser-intake-ap2-datadoghq.com
 quota.browser-intake-datadoghq.com
