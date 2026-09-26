@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "description": "Public unauthenticated baseline discovery only. Rules remain HOLD until human review.",
+  "max_hosts_per_run": 3,
+  "max_seed_pages_per_host": 6,
+  "observe_seconds": 7,
+  "targets": [
+    {
+      "host": "ct.pinterest.com",
+      "vendor": "Pinterest",
+      "mode": "research-only",
+      "pages": [
+        "https://oddmuse.co.uk/",
+        "https://bydeeaus.com/"
+      ]
+    },
+    {
+      "host": "bat.bing.com",
+      "vendor": "Microsoft Advertising",
+      "mode": "research-only",
+      "pages": [
+        "https://www.newegg.com/"
+      ]
+    }
+  ],
+  "site_pool": [
+    "https://www.ctvnews.ca/",
+    "https://www.newegg.com/",
+    "https://oddmuse.co.uk/",
+    "https://bydeeaus.com/",
+    "https://autoevents.simpleanalytics.com/",
+    "https://www.simpleanalytics.com/"
+  ]
+}
