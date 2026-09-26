@@ -29,3 +29,16 @@ The separate draft RC adds an exact entry to `rules/rules.csv` and regenerates p
 5. Separate explicit maintainer authorization to merge. Until then the live `main/blocklists/standard.txt` has 90 rules and the immutable `v0.2.0-alpha` snapshot remains 13.
 
 `bat.bing.com` is **excluded** from this RC; its shared UET script and events mean higher risk and it remains HOLD in separate research.
+
+## Repeated public-browser performance follow-up (2026-09-26)
+
+A more stringent A/B test repeated two normal and two exact-host-blocked, clean-browser visits per public merchant site, in alternating normal/blocked/blocked/normal order. Each visit observed browser network activity for 12 seconds after the page loaded. Source, test thresholds and retained reports: `scripts/pinterest_retry_audit.py`, `tests/test_pinterest_retry_audit.py`, and https://github.com/muzii9/netcalckit-blocklist/actions/runs/36263434244 (artifact `pinterest-retry-audit`). All six audit-logic unit tests passed.
+
+| Public site | Natural exact-host requests (both baseline repeats) | Exact-host failed requests (both blocked repeats) | Basic public page and DOM timing |
+| --- | ---: | ---: | --- |
+| `oddmuse.co.uk` | 3, 3 | 32, 32 | HTTP 200 and readable body 6,266 characters in all four runs. Baseline DOM-loaded times: 2,438 and 1,474 ms; blocked: 1,639 and 1,633 ms. |
+| `bydeeaus.com` | 3, 3 | 32, 32 | HTTP 200 and readable body 5,789 characters in all four runs. Baseline DOM-loaded times: 1,445 and 1,344 ms; blocked: 1,320 and 1,327 ms. |
+
+All 32 intercepted attempts occurred in the initial observation period (none after the first six seconds in these runs). We **did not observe degraded basic content or slower DOM-loaded times** on these two public pages, but there was a reproducible **about 10.7× early request-attempt amplification**, from 3 to 32. Its cause has not been established independently: it may be retries or another failure-response reaction. The run is intentionally classified **review-required**, with a red performance workflow; do not treat the previous green basic-render workflow as full clearance.
+
+**Publication status:** Keep this RC **draft and unmerged** while the early failed-request amplification is investigated or explicitly reviewed under the project's false-positive policy. This evidence does not demonstrate actual end-user harm, bandwidth consumption from *failed* requests, browser CPU/battery impact, checkout impact, or behavior with a real DNS provider. Independent actual-DNS or resource-usage checks would be needed for stronger assurances. Do not quietly override the red review signal to increase rule count.
