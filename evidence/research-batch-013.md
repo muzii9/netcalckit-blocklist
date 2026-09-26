@@ -1,6 +1,6 @@
 # Batch 013 — first-party conversion endpoint discovery (2026-09-26)
 
-Research only. The exact hosts below are **HOLD**, not published. They are absent from the 90-rule Standard list and existing 13-row main candidate queue at discovery time. No apex domain, wildcard, script CDN, payment, login, dashboard, or unrelated service is proposed.
+Research only. Microsoft UET remains **HOLD** in this PR; Pinterest is separately proposed in unmerged draft Standard release candidate [PR #21](https://github.com/muzii9/netcalckit-blocklist/pull/21). Neither is published by this research PR. They are absent from the 90-rule Standard list and existing 13-row main candidate queue at discovery time. No apex domain, wildcard, script CDN, payment, login, dashboard, or unrelated service is proposed.
 
 ## ct.pinterest.com — Pinterest conversion event endpoint
 
@@ -28,6 +28,15 @@ The candidate queue and repository validation passed. GitHub-hosted `dig` return
 - `ct.pinterest.com` resolved through a CNAME chain containing `www.pinterest.com` and Akamai edge names. This **does not mean a DNS rule for `ct.pinterest.com` also blocks `www.pinterest.com`**, but means that the event-only role documented for the `ct` virtual host must be confirmed independently; it does not prove that the underlying infrastructure is isolated.
 
 The CI-generated priority table classified both candidates as **HOLD**: `ct.pinterest.com` has a stronger dedicated-collection claim but unresolved essential-function/shared-infrastructure questions; `bat.bing.com` is high risk for a Standard promotion because SDK scripts and event ingestion share a DNS hostname. Neither may be published from this evidence alone.
+
+## Public real-site reconnaissance and split review (2026-09-26)
+
+Follow-up baseline and exact-host-blocked report: https://github.com/muzii9/netcalckit-blocklist/actions/runs/36262556724 .
+
+- `ct.pinterest.com` was naturally requested 3 times each by two public Pinterest advertiser websites, `oddmuse.co.uk` and `bydeeaus.com`. The basic page body stayed unchanged in the blocked comparison. But **32 requests were intercepted during blocked mode** on each site, versus 3 baseline requests. Repeated retries/network overhead and broader application impact are not cleared; full risk analysis is documented in `evidence/pinterest-conversion-rc.md` on **draft** PR #21. This exact host is **not** staged in this research branch's candidate queue, to prevent duplicate rule/candidate conflicts if the separately reviewed RC later merges.
+- `bat.bing.com` was naturally requested 3 times on `newegg.com`; the separate repeat baseline saw 3 requests, and the blocked mode intercepted 1 request while basic readable page content remained similar. This narrow public-page smoke check does **not** establish that disabling the UET SDK is safe across ecommerce sites. `bat.bing.com` remains the **sole newly staged HOLD** in this research PR due to high false-positive uncertainty.
+
+No publication, no automatic merge and no claim of universal app compatibility follow from these results.
 
 ## Non-promotion and testing gates
 
