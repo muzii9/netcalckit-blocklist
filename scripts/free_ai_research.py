@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Optional zero-paid-tier AI research report. Never modifies candidate/rule databases."""
 import json
+import csv
+import hashlib
+import re
 import os
 import urllib.request
 from datetime import date
@@ -9,6 +12,21 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "research/ai-research-report.json"
 REGISTRY = ROOT / "research/vendor-registry.json"
+QUEUE = ROOT / "candidates/candidates.csv"
+RULES = ROOT / "rules/rules.csv"
+MAX_SEARCHES = 8
+HOST = re.compile(r"(?<![\\w.-])(?:[a-z0-9-]+\\.)+[a-z]{2,}(?![\\w.-])", re.I)
+
+def known_hosts():
+    known = set()
+    for path in (QUEUE, RULES):
+        with path.open(newline="", encoding="utf-8") as stream:
+            known.update(row["domain"].lower() for row in csv.DictReader(stream))
+    return known
+
+def exact_excerpt_host(host, hits):
+    return any(host in set(HOST.findall(hit["content_excerpt"].lower())) for hit in hits)
+
 
 def post(url, payload, headers):
     data = json.dumps(payload).encode()
@@ -24,8 +42,11 @@ def main():
         return 0
     sources = json.loads(REGISTRY.read_text())["sources"]
     findings, errors = [], []
-    # 24 basic searches/day = at most 744 credits in a 31-day month.
-    # Reserve at least 256 of the 1,000 free monthly credits.
+    known = known_hosts()
+    if not sources:
+        print("No registered vendors; skipping optional AI research.")
+        return 0
+    # One query per registered vendor, up to eight per day. Report-only.
     queries = [
         "official collection ingest hostname documentation",
         "tracking endpoint domain SDK configuration official",
@@ -36,9 +57,11 @@ def main():
         "telemetry endpoint network firewall allowlist",
         "session recording collection hostname docs",
     ]
-    for index in range(24):
-        source = sources[index % len(sources)]
-        query = queries[(index // len(sources)) % len(queries)]
+    day = date.today().toordinal()
+    ordered = sorted(sources, key=lambda source: hashlib.sha256(
+        (str(day) + source["vendor"]).encode()).hexdigest())
+    for index, source in enumerate(ordered[:MAX_SEARCHES]):
+        query = queries[(day + index) % len(queries)]
         try:
             search = post("https://api.tavily.com/search",
                 {"api_key": tavily, "query": source["vendor"] + " " + query,
@@ -47,7 +70,7 @@ def main():
             hits = [{"url": h.get("url", ""), "title": h.get("title", ""),
                      "content_excerpt": h.get("content", "")[:700]}
                     for h in search.get("results", [])[:3]]
-            # Analyze all 24 searches under this project's 500 RPD quota.
+            # One Gemini analysis per successful search; AI results remain report-only.
             # Gemini response is untrusted research commentary; never promoted automatically.
             prompt = ("You are a conservative DNS blocklist research assistant. Analyze these search excerpts. "
                 "Return concise JSON with keys vendor, candidate_hosts (array of {hostname, source_url, "
@@ -64,11 +87,10 @@ def main():
             text = response["candidates"][0]["content"]["parts"][0]["text"]
             analysis = json.loads(text)
             # Deterministic checks: only literal excerpt hosts, suffix-matched; report only.
-            corpus = " ".join(h["content_excerpt"] for h in hits).lower()
             safe = []
             for item in analysis.get("candidate_hosts", []):
                 host = str(item.get("hostname", "")).lower().strip()
-                if (host and host in corpus and
+                if (host and host not in known and exact_excerpt_host(host, hits) and
                     any(host.endswith("." + suffix) for suffix in source["allowed_suffixes"])):
                     safe.append({**item, "hostname": host, "status": "hold_unverified"})
             findings.append({"vendor": source["vendor"], "query": query, "search_hits": hits,
@@ -80,7 +102,7 @@ def main():
     OUTPUT.write_text(json.dumps({"date": date.today().isoformat(), "findings": findings,
         "errors": errors, "disclaimer": "AI suggestions are unverified and never automatically blocklisted."},
         indent=2) + "\n")
-    print("AI research completed:", len(findings), "vendors;", len(errors), "errors.")
+    print("AI research completed:", len(findings), "queries;", len(errors), "errors; cap", MAX_SEARCHES, "daily.")
     return 0 if findings else 1
 
 if __name__ == "__main__":
