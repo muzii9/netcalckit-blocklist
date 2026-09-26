@@ -18,6 +18,17 @@ Microsoft's UET documentation confirms `https://bat.bing.com/action/0` receives 
 
 **Risk:** moderate to high until verified. HOLD rather than auto-promote. Test basic site rendering and any declared site behavior that depends on the UET SDK; do not promote solely because the event path is dedicated. The entire exact host must be evaluated, not merely `/action/0`.
 
+## Automated verification — GitHub candidate review (2026-09-26)
+
+Workflow: https://github.com/muzii9/netcalckit-blocklist/actions/runs/36262294829
+Validation: https://github.com/muzii9/netcalckit-blocklist/actions/runs/36262294833
+
+The candidate queue and repository validation passed. GitHub-hosted `dig` returned active A/AAAA resolution for both exact hostnames:
+- `bat.bing.com` resolved through Microsoft edge host aliases and returned addresses. This only confirms live DNS, not that blocking the entire host is safe.
+- `ct.pinterest.com` resolved through a CNAME chain containing `www.pinterest.com` and Akamai edge names. This **does not mean a DNS rule for `ct.pinterest.com` also blocks `www.pinterest.com`**, but means that the event-only role documented for the `ct` virtual host must be confirmed independently; it does not prove that the underlying infrastructure is isolated.
+
+The CI-generated priority table classified both candidates as **HOLD**: `ct.pinterest.com` has a stronger dedicated-collection claim but unresolved essential-function/shared-infrastructure questions; `bat.bing.com` is high risk for a Standard promotion because SDK scripts and event ingestion share a DNS hostname. Neither may be published from this evidence alone.
+
 ## Non-promotion and testing gates
 
 1. Confirm both exact hosts resolve from independent DNS vantage points and have no allowlist conflicts. Resolving proves availability, not block safety.
