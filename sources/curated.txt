@@ -31,6 +31,7 @@ cdn.us.heap-api.com
 cdn.usefathom.com
 cloudflareinsights.com
 csxd.contentsquare.net
+ct.pinterest.com
 d.clarity.ms
 dc.ads.linkedin.com
 dc.applicationinsights.azure.com
