@@ -1,30 +1,23 @@
-# Ninth alpha research batch — 2026-09-25
+# Ninth research batch — PostHog and LogRocket
 
-Research reviewed current first-party documentation for browser analytics and data-collection services. No hostname met the project's strict low-false-positive promotion threshold in this pass.
+Date: 2026-09-27
 
-## Adobe Experience Platform
-
-`edge.adobedc.net` is documented by Adobe as an Edge Network endpoint used for data collection. The same platform supports personalization, advertising, marketing, Analytics, and other Experience Cloud services. Because the hostname is mixed-purpose, it is not suitable for Standard promotion.
-
-Evidence: https://developer.adobe.com/data-collection-apis/docs/endpoints/
+## Scope
+Exact-host research for analytics and session-replay services, with duplicate checks against published rules and held candidates.
 
 ## PostHog
+- `us.i.posthog.com`
+- Evidence: https://posthog.com/docs/experiments/no-code-web-experiments
+- Official SDK configuration uses this as the PostHog `api_host`.
+- It participates in analytics plus feature flags/session recording/experiments.
+- Decision: **HOLD** because the endpoint is mixed-purpose and outside the low-false-positive automatic promotion gate.
 
-`us.i.posthog.com` appears as the SDK `api_host` in official PostHog no-code web experiment documentation. The same host can serve feature-flag and experiment functionality alongside event analytics, so DNS-level blocking is mixed-purpose and risks application behavior. Staged on HOLD, not a Standard candidate. DNS health and application compatibility are not yet independently verified.
+## LogRocket
+Evidence: https://docs.logrocket.com/docs/troubleshooting-sessions
 
-Evidence: https://posthog.com/docs/experiments/no-code-web-experiments
+Official CSP troubleshooting documentation names multiple script origins used by the recording SDK and wildcard connection origins. The evidence is strong for service attribution but not sufficient to infer every exact connection hostname from wildcard patterns.
 
-## Sentry
+Decision: **HOLD / further research**. Do not promote broad patterns or inferred hosts.
 
-`o0.ingest.sentry.io` appears as an illustrative DSN ingestion hostname in Sentry's official SDK documentation. It is not proof of a universally active endpoint, and Sentry ingestion may carry essential error and crash diagnostics. Staged on HOLD; no promotion without resolving-host verification and compatibility testing.
-
-Evidence: https://docs.sentry.io/platforms/javascript/enriching-events/attachments/
-
-## Decision
-
-- Newly staged candidates: 2 (both HOLD; PostHog mixed-purpose, Sentry diagnostics/illustrative endpoint)
-- Standard promotions: 0
-- Release-candidate PR: not created
-- Main branch remains unchanged
-
-This pass intentionally prioritizes false-positive safety rather than filling the research cap with weak candidates.
+## Promotion decision
+No newly reviewed candidate in this batch meets the strict automatic Standard promotion threshold. No release-candidate branch is prepared. Main remains unchanged pending human review.
