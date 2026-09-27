@@ -1,0 +1,38 @@
+name: Pinterest merchant-site retry audit
+
+on:
+  pull_request:
+    paths:
+      - "scripts/pinterest_retry_audit.py"
+      - "tests/test_pinterest_retry_audit.py"
+      - ".github/workflows/pinterest-retry-audit.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  retry-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 9
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Verify audit guard logic offline
+        run: python -m unittest discover -s tests -p 'test_pinterest_retry_audit.py' -v
+      - name: Check available Chrome browser
+        run: which google-chrome || which google-chrome-stable || which chromium
+      - name: Install browser bindings
+        run: python -m pip install playwright==1.55.0
+      - name: Repeat real-site A/B and flag retry amplification
+        run: python scripts/pinterest_retry_audit.py
+      - name: Upload sanitized performance report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pinterest-retry-audit
+          path: qa-reports/pinterest-retry-audit.*
+          retention-days: 30
+          if-no-files-found: warn

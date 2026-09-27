@@ -124,3 +124,23 @@ if [[ "$loaded_rules" != "$expected_rules" ]]; then
 fi
 
 LIST_URL="http://127.0.0.1:$SOURCE_PORT/blocklists/standard.txt" DNS_SERVER=127.0.0.1 DNS_PORT="$DNS_PORT" CONTROL_DOMAIN="$CONTROL_DOMAIN" REPORT="$REPORT" bash scripts/test_adguard_home.sh
+
+# CNAME safety regression for the narrowly scoped Pinterest conversion hostname.
+# The vendor's ct hostname may alias via www.pinterest.com infrastructure, but
+# blocking ct must never unintentionally block the unrelated public WWW host.
+if grep -qx 'ct.pinterest.com' blocklists/standard.txt; then
+    echo 'CNAME safety: verifying www.pinterest.com remains publicly resolvable.'
+    extra_control=''
+    for _ in {1..3}; do
+        extra_control="$(dig @127.0.0.1 -p "$DNS_PORT" www.pinterest.com A +short +time=3 +tries=1 || true)"
+        if printf '%s\n' "$extra_control" | awk '/^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$/ && $0 != "0.0.0.0" { found=1 } END { exit !found }'; then
+            break
+        fi
+        sleep 1
+    done
+    if ! printf '%s\n' "$extra_control" | awk '/^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$/ && $0 != "0.0.0.0" { found=1 } END { exit !found }'; then
+        echo 'ERROR: www.pinterest.com did not resolve to a public A address with the proposed ct rule active.' >&2
+        exit 5
+    fi
+    echo 'CNAME safety: www.pinterest.com resolved while ct.pinterest.com remained blocked.' | tee -a "$REPORT"
+fi
