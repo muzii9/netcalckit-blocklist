@@ -4,19 +4,42 @@
       "vendor": "Pendo",
       "category": "product_analytics",
       "url": "https://support.pendo.io/hc/en-us/articles/21338207825307-Host-name-list-for-Pendo-subscriptions-in-restricted-network-environments",
-      "allowed_suffixes": ["pendo.io"]
+      "allowed_suffixes": [
+        "pendo.io"
+      ]
     },
     {
       "vendor": "Contentsquare",
       "category": "session_replay",
       "url": "https://docs.contentsquare.com/en/web/requests/",
-      "allowed_suffixes": ["contentsquare.net"]
+      "allowed_suffixes": [
+        "contentsquare.net"
+      ]
     },
     {
       "vendor": "Heap",
       "category": "product_analytics",
       "url": "https://developers.heap.io/docs/web",
-      "allowed_suffixes": ["heap-api.com", "heapanalytics.com"]
+      "allowed_suffixes": [
+        "heap-api.com",
+        "heapanalytics.com"
+      ]
+    },
+    {
+      "vendor": "Pinterest",
+      "category": "ad_conversion_tracking",
+      "url": "https://developers.pinterest.com/docs/track-conversions/pinterest-tag/",
+      "allowed_suffixes": [
+        "pinterest.com"
+      ]
+    },
+    {
+      "vendor": "Microsoft Advertising",
+      "category": "ad_conversion_tracking",
+      "url": "https://learn.microsoft.com/en-us/advertising/msa-help/hlp_ba_conc_uet_img_tag",
+      "allowed_suffixes": [
+        "bing.com"
+      ]
     }
   ]
 }
