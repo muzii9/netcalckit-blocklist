@@ -123,6 +123,13 @@ class AutomaticReleasePolicyTests(unittest.TestCase):
         chosen, _ = m.select_candidate([a, b], [], set())
         self.assertEqual(chosen.domain, b.domain)
 
+    def test_rotation_prevents_one_candidate_from_starving_queue(self):
+        a = candidate(domain="a.collect.example.com", status="research")
+        b = candidate(domain="b.collect.example.com", status="research")
+        first, _ = m.select_candidate([a, b], [], set(), slot=0)
+        second, _ = m.select_candidate([a, b], [], set(), slot=1)
+        self.assertNotEqual(first.domain, second.domain)
+
     def test_investigator_config_is_one_host_and_public_pool_only(self):
         c = candidate()
         base = {
