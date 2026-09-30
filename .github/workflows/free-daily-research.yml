@@ -53,7 +53,7 @@ jobs:
           stamp = date.today().isoformat()
           path = Path('evidence') / ('automated-' + stamp + '.md')
           lines = ['# Automated documentation scan — ' + stamp, '',
-                   'Discovery only. Every candidate is HOLD. Exact endpoint purpose, DNS health,',
+                   'Discovery only. Every new candidate is RESEARCH-stage. Exact endpoint purpose, DNS health,',
                    'compatibility and first-party evidence context require automated + human verification.', '']
           for item in result['new']:
               lines.extend(['## ' + item['hostname'], '',
