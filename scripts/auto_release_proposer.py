@@ -109,7 +109,8 @@ def priority(candidate: Candidate) -> tuple:
     )
 
 
-def select_candidate(candidates, rules, allowlisted):
+def select_candidate(candidates, rules, allowlisted, slot=0):
+    """Choose one eligible candidate, rotating deterministically so one inconclusive host cannot starve the queue."""
     existing = {row["domain"] for row in rules}
     eligible = []
     audit = []
@@ -132,7 +133,8 @@ def select_candidate(candidates, rules, allowlisted):
             }
         )
     eligible.sort(key=priority)
-    return (eligible[0] if eligible else None), audit
+    chosen = eligible[slot % len(eligible)] if eligible else None
+    return chosen, audit
 
 
 def safe_public_url(url: str) -> bool:
@@ -420,7 +422,9 @@ def main() -> int:
     candidates = load_candidates(CANDIDATES)
 
     if args.command == "select":
-        chosen, audit = select_candidate(candidates, read_rules(), read_allowlist())
+        chosen, audit = select_candidate(
+            candidates, read_rules(), read_allowlist(), slot=date.today().toordinal()
+        )
         payload = {
             "date": date.today().isoformat(),
             "selected": asdict(chosen) if chosen else None,
