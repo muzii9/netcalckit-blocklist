@@ -119,7 +119,8 @@ def select_targets(config, candidate_csv, case_json, new_hosts, week=None):
     known = {t["host"]: t for t in config["targets"]}
     registry = registry_pages(case_json)
     candidates = {row["domain"]: row for row in csv.DictReader(candidate_csv.splitlines())
-                  if row["status"] == "hold" and public_host(row["domain"])}
+                  if row["status"] in {"new", "research", "review", "hold"}
+                  and public_host(row["domain"])}
     selected = []
     def add(h, source, vendor, known_pages):
         if not public_host(h) or any(x["host"] == h for x in selected):
@@ -134,10 +135,16 @@ def select_targets(config, candidate_csv, case_json, new_hosts, week=None):
             pin.get("pages", []))
     for pin in config["targets"]:
         add(pin["host"], "RESEARCH_PIN", pin["vendor"], pin.get("pages", []))
-    holds = sorted(set(candidates) - {t["host"] for t in selected})
-    if holds:
-        pick = holds[week % len(holds)]
-        add(pick, "ROTATING_HOLD", candidates[pick]["vendor"], [])
+    remaining = list(set(candidates) - {t["host"] for t in selected})
+    status_rank = {"review": 0, "research": 1, "new": 2, "hold": 3}
+    remaining.sort(key=lambda h: (status_rank.get(candidates[h]["status"], 9), h))
+    if remaining:
+        # Rotate inside the bounded queue while keeping active research ahead of explicit HOLD rows.
+        best_rank = status_rank.get(candidates[remaining[0]]["status"], 9)
+        active = [h for h in remaining if status_rank.get(candidates[h]["status"], 9) == best_rank]
+        pick = active[week % len(active)]
+        source = "ROTATING_" + candidates[pick]["status"].upper()
+        add(pick, source, candidates[pick]["vendor"], [])
     capacity = config["max_hosts_per_run"]
     omitted = sorted(new_hosts - {x["host"] for x in selected[:capacity]})
     return selected[:capacity], omitted
