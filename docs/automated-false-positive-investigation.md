@@ -14,8 +14,8 @@ tracked domains are safe. Read the explicit per-host statuses in its artifact.
 - It uses the reviewed public-page pool and research pins from
   tests/false-positive-investigator.json plus the approved-site case registry.
 - NEW approved Standard rules are prioritized on release-candidate PRs.
-- For routine research it checks two explicit research pins and one rotating HOLD
-  candidate from candidates/candidates.csv. No more than three target hosts
+- For routine research it checks two explicit research pins and one rotating candidate
+  from candidates/candidates.csv. Active `review`/`research`/`new` rows are prioritized before explicit `hold` rows. No more than three target hosts
   or six public seed pages per host are explored in one run.
 - It observes a target only when an *independent public site naturally requests*
   its exact DNS hostname. It does not create synthetic tracker traffic.

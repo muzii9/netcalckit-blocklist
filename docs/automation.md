@@ -22,6 +22,8 @@ New discoveries are staged in `candidates/candidates.csv`. CI validates the queu
 
 See `docs/candidate-pipeline.md` for the lifecycle and scoring rules.
 
+After a research-stage candidate reaches `main`, `.github/workflows/auto-release-proposal.yml` may automatically run bounded false-positive investigation. Only a candidate with primary evidence, no deterministic hard-risk exclusion, and repeated `LIMITED_SMOKE_PASS` results on at least two independent public sites can become an **unmerged draft RC**. The workflow never merges or publishes that PR; explicit maintainer approval remains required. See `docs/automatic-release-proposals.md`.
+
 ## GitHub Actions quality gate
 
 Every push and pull request:

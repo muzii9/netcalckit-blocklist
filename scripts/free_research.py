@@ -73,9 +73,9 @@ def main():
             row.update(domain=host, vendor=source["vendor"], category=source["category"],
                 evidence_url=url, evidence_type="vendor-doc", dedicated_service="unknown",
                 shared_infrastructure="unknown", essential_function="unknown",
-                false_positive_risk="unknown", status="hold",
+                false_positive_risk="unknown", status="research",
                 observed_date=date.today().isoformat(),
-                notes="Plausible collection hostname in vendor docs; HOLD: confirm exact event collection role and essential functionality manually")
+                notes="Plausible collection hostname in vendor docs; RESEARCH: automatic compatibility triage may investigate it, but promotion still requires draft RC review")
             candidates.append(row)
             known.add(host)
             added.append({"hostname": host, "vendor": source["vendor"], "evidence_url": url})
@@ -89,7 +89,7 @@ def main():
             writer.writerows(candidates)
     OUT.parent.mkdir(exist_ok=True)
     OUT.write_text(json.dumps({"date": date.today().isoformat(), "new": added, "source_errors": errors}, indent=2) + "\n")
-    print(f"New HOLD candidates: {len(added)}; source errors: {len(errors)}")
+    print(f"New research-stage candidates: {len(added)}; source errors: {len(errors)}")
     if errors:
         print("Source errors:", json.dumps(errors))
     return 0

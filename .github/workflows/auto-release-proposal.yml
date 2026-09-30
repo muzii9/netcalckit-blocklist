@@ -1,0 +1,222 @@
+name: Automatic draft RC proposer
+
+on:
+  pull_request:
+    paths:
+      - "scripts/auto_release_proposer.py"
+      - "scripts/false_positive_investigator.py"
+      - "scripts/free_research.py"
+      - "tests/test_auto_release_proposer.py"
+      - "tests/test_false_positive_investigator.py"
+      - ".github/workflows/auto-release-proposal.yml"
+      - ".github/workflows/free-daily-research.yml"
+  push:
+    branches: [main]
+    paths:
+      - "candidates/candidates.csv"
+      - "tests/false-positive-investigator.json"
+      - "tests/live-site-cases.json"
+      - "scripts/auto_release_proposer.py"
+      - "scripts/false_positive_investigator.py"
+      - ".github/workflows/auto-release-proposal.yml"
+  schedule:
+    - cron: "45 4 * * *" # 09:45 Pakistan time (UTC+5)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: auto-release-proposal
+  cancel-in-progress: false
+
+jobs:
+  policy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Unit-test proposal and investigator guardrails
+        run: |
+          python3 -m unittest discover -s tests -p 'test_auto_release_proposer.py' -v
+          python3 -m unittest discover -s tests -p 'test_false_positive_investigator.py' -v
+          python3 -m unittest discover -s tests -p 'test_free_research_guard.py' -v
+      - name: Validate existing candidate queue
+        run: python3 scripts/validate_candidates.py
+
+  propose:
+    if: github.event_name != 'pull_request'
+    needs: policy
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Select one conservative research-stage candidate
+        id: select
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p qa-reports
+          host="$(python3 scripts/auto_release_proposer.py select --output qa-reports/auto-release-selection.json | tail -n 1)"
+          echo "host=$host" >> "$GITHUB_OUTPUT"
+          if [[ -z "$host" ]]; then
+            echo "No candidate currently meets the deterministic pre-browser gate."
+          else
+            echo "Selected for bounded public-site investigation: $host"
+          fi
+
+      - name: Skip candidate with an existing open proposal
+        id: duplicate
+        if: steps.select.outputs.host != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          HOST: ${{ steps.select.outputs.host }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if gh pr list --state open --limit 100 --json title --jq '.[].title' | grep -Fq "$HOST"; then
+            echo "duplicate=true" >> "$GITHUB_OUTPUT"
+            echo "An open PR already names $HOST; not creating a duplicate."
+          else
+            echo "duplicate=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Prepare one-host bounded investigator config
+        if: steps.select.outputs.host != '' && steps.duplicate.outputs.duplicate == 'false'
+        run: |
+          python3 scripts/auto_release_proposer.py config \
+            --host "${{ steps.select.outputs.host }}" \
+            --output qa-reports/auto-release-fp-config.json
+
+      - name: Check preinstalled Chrome
+        if: steps.select.outputs.host != '' && steps.duplicate.outputs.duplicate == 'false'
+        run: which google-chrome || which google-chrome-stable || which chromium
+
+      - name: Install pinned browser bindings
+        if: steps.select.outputs.host != '' && steps.duplicate.outputs.duplicate == 'false'
+        run: python3 -m pip install playwright==1.55.0
+
+      - name: Run repeated public-site false-positive investigation
+        if: steps.select.outputs.host != '' && steps.duplicate.outputs.duplicate == 'false'
+        run: |
+          python3 scripts/false_positive_investigator.py \
+            --config qa-reports/auto-release-fp-config.json \
+            --output-dir qa-reports
+
+      - name: Stage a draft RC only after two-site limited smoke evidence
+        id: stage
+        if: steps.select.outputs.host != '' && steps.duplicate.outputs.duplicate == 'false'
+        env:
+          HOST: ${{ steps.select.outputs.host }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/auto_release_proposer.py apply \
+            --host "$HOST" \
+            --report qa-reports/false-positive-investigation.json \
+            --decision-output qa-reports/auto-release-decision.json
+
+          status="$(git status --porcelain -- rules/rules.csv candidates/candidates.csv evidence tests/live-site-cases.json README.md)"
+          if [[ -z "$status" ]]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "Candidate did not reach the automatic DRAFT-RC threshold. Nothing staged."
+            exit 0
+          fi
+
+          python3 scripts/build.py
+          python3 scripts/validate_candidates.py
+          python3 scripts/validate.py
+          python3 -m unittest discover -s tests -v
+
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+          echo "slug=${HOST//./-}" >> "$GITHUB_OUTPUT"
+
+      - name: Create draft release-candidate PR
+        id: pr
+        if: steps.stage.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          HOST: ${{ steps.select.outputs.host }}
+          SLUG: ${{ steps.stage.outputs.slug }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          branch="release/auto-rc-${SLUG}-${GITHUB_RUN_ID}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$branch"
+          git add \
+            rules/rules.csv candidates/candidates.csv \
+            "evidence/auto-rc-${SLUG}.md" \
+            tests/live-site-cases.json \
+            sources/curated.txt blocklists/standard.txt README.md
+          git commit -m "Propose ${HOST} as automatically investigated Standard RC"
+          git push origin "$branch"
+
+          cat > /tmp/auto-rc-body.md <<EOF
+          DRAFT RELEASE PROPOSAL — human review and explicit merge approval required.
+
+          The automatic proposer selected ${HOST} from the research-stage queue using primary evidence and hard-risk exclusions. It then required two independent public sites to naturally request the exact hostname in repeated baseline trials and required both sites to remain LIMITED_SMOKE_PASS under repeated DNS-like exact-host blocking.
+
+          The branch contains an auto-generated evidence record, removes the candidate from the staging queue, adds the proposed approved Standard row, registers the naturally exercised public pages, and rebuilds generated list files. Full pull-request CI must now independently run repository validation, candidate checks, real-site browser regression, automated false-positive strict-new gating, and isolated AdGuard Home enforcement.
+
+          LIMITED_SMOKE_PASS is not universal compatibility. Do not auto-merge. Login, checkout, private applications, device resource impact and real DNS-provider behavior can still require human review.
+
+          Automation run: https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}
+          EOF
+
+          url="$(gh pr create --draft --base main --head "$branch" \
+            --title "Automated RC proposal: ${HOST} — explicit approval required" \
+            --body-file /tmp/auto-rc-body.md)"
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+          echo "Created: $url"
+
+      - name: Upload selection and false-positive reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: auto-release-proposal-report
+          path: |
+            qa-reports/auto-release-selection.json
+            qa-reports/auto-release-fp-config.json
+            qa-reports/false-positive-investigation.json
+            qa-reports/false-positive-investigation.md
+            qa-reports/auto-release-decision.json
+          if-no-files-found: ignore
+          retention-days: 21
+
+      - name: Telegram proposal notification
+        if: always()
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          HOST: ${{ steps.select.outputs.host }}
+          PR_URL: ${{ steps.pr.outputs.url }}
+          JOB_STATUS: ${{ job.status }}
+        shell: bash
+        run: |
+          if [[ -z "$TELEGRAM_BOT_TOKEN" || -z "$TELEGRAM_CHAT_ID" ]]; then
+            echo "Telegram secrets not configured; notification skipped."
+            exit 0
+          fi
+          result="no draft RC created"
+          if [[ -n "$PR_URL" ]]; then
+            result="draft RC created: $PR_URL"
+          elif [[ -n "$HOST" ]]; then
+            result="$HOST investigated but not promoted"
+          fi
+          msg="NetCalcKit auto-RC: ${JOB_STATUS}; ${result}. Run: https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          curl --fail --silent --show-error --retry 2 \
+            --data-urlencode "chat_id=$TELEGRAM_CHAT_ID" \
+            --data-urlencode "text=$msg" \
+            "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" >/dev/null

@@ -17,7 +17,7 @@ class CollectorGuardTests(unittest.TestCase):
             with self.subTest(host=host):
                 self.assertFalse(module.plausible_collector(host))
 
-    def test_allow_only_plausible_hosts_still_hold(self):
+    def test_allow_only_plausible_hosts_for_research(self):
         for host in ("collect.example.com", "ingest.example.com",
                      "srm.af.contentsquare.net", "events.vendor.example"):
             with self.subTest(host=host):
