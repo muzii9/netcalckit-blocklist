@@ -43,6 +43,8 @@ A third-party blocklist hit can create a candidate, but can never by itself make
 
 Before promotion to `rules/rules.csv`:
 
+A `research`/`review` candidate may be investigated by the automatic draft-RC proposer. Explicit `hold`/`rejected` rows are never eligible. Even when automation prepares a draft RC after two independent public-site limited-smoke passes, the RC still requires normal CI and an explicit maintainer merge.
+
 1. establish primary or reproducible evidence;
 2. write an evidence record under `evidence/`;
 3. assess false-positive risk and essential/shared infrastructure;
