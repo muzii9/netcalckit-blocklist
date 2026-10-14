@@ -71,6 +71,16 @@ class TestPolicy(unittest.TestCase):
         self.assertEqual(len(selected),1)
         self.assertEqual(selected[0]["source"],"ROTATING_HOLD")
 
+    def test_research_stage_is_prioritized_over_explicit_hold(self):
+        candidate_csv = CANDIDATES + (
+            "collect.newvendor.net,New Vendor,web_analytics,https://example.com/docs,"
+            "vendor-doc,unknown,unknown,unknown,unknown,research,2026-09-30,official-doc discovery\n"
+        )
+        small={**self.config,"targets":[],"max_hosts_per_run":1}
+        selected,_=m.select_targets(small,candidate_csv,REGISTRY,set(),week=1)
+        self.assertEqual(selected[0]["host"],"collect.newvendor.net")
+        self.assertEqual(selected[0]["source"],"ROTATING_RESEARCH")
+
     def test_proposed_host_sha_checked_before_git(self):
         with self.assertRaises(ValueError):
             m.proposed_hosts("HEAD;echo unsafe")

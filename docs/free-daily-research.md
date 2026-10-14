@@ -5,9 +5,9 @@ This workflow uses GitHub Actions and Python only. No OpenAI API or paid AI serv
 - Scheduled daily at 03:17 UTC (08:17 Pakistan time), with optional manual dispatch. GitHub may delay scheduled jobs.
 - Scans three explicitly registered official vendor documentation pages. It is **not** an autonomous general web-search engine; expand the registry after reviewing vendor documentation.
 - Discovers up to 30 exact hostnames within registered vendor suffixes. It rejects existing candidates, existing rules, allowlisted names, vendor apexes and common risky infrastructure labels.
-- Every discovery is **HOLD** with unknown essential/shared-service flags. Page-text presence is a discovery signal, **not** proof of tracking or permission to block.
+- Every deterministic official-document discovery is **RESEARCH-stage** with unknown essential/shared-service flags. Page-text presence is a discovery signal, **not** proof of tracking or permission to block. Explicit maintainer HOLD rows remain HOLD and are never auto-proposed.
 - If new candidates exist, opens a draft PR and triggers the existing candidate review and validation workflows. No new candidates means no PR.
-- Does not modify rules, generated blocklists, main, or create Standard release-candidate PRs.
+- Does not modify rules, generated blocklists, or main. After a research PR is explicitly merged, the separate automatic RC proposer may investigate a candidate and can only open a **draft** Standard proposal after its stricter gates pass.
 - The scheduled job only starts after this automation PR is reviewed and merged into main.
 
 ## Telegram (optional)
@@ -20,18 +20,18 @@ GitHub Actions may require Settings > Actions > General > Workflow permissions: 
 
 Review daily workflow runs and draft PRs. Inspect candidate-review artifacts for DNS health, validate the documentation context manually, and record false-positive concerns. A clean DNS result does not prove a hostname is safe to block. If documentation fetch fails, the scanner records an error and does not fabricate evidence.
 
-No automated promotion or merge is permitted.
+No automated merge is permitted. Promotion is limited to generating a draft RC after the separate two-site false-positive gate passes.
 
 ## Optional Gemini + Tavily research (free quotas only)
 
-Add repository Actions secrets `GEMINI_API_KEY` and `TAVILY_API_KEY`. The workflow makes at most 24 basic Tavily searches and 24 Gemini analysis requests per daily run, then uploads `free-ai-research-report` as a workflow artifact. Gemini model: `gemini-3.1-flash-lite`; model availability and free-tier quotas must be confirmed in your own account. API failures do not automatically trigger paid fallback.
+Add repository Actions secrets `GEMINI_API_KEY` and `TAVILY_API_KEY`. The workflow makes at most 8 basic Tavily searches and 8 Gemini analysis requests per daily run, then uploads `free-ai-research-report` as a workflow artifact. Gemini model: `gemini-3.1-flash-lite`; model availability and free-tier quotas must be confirmed in your own account. API failures do not automatically trigger paid fallback.
 
-AI suggestions are **not** added to the candidate database: they are report-only, remain unverified HOLD suggestions, and require independent first-party documentation review. The deterministic scanner separately stages only documented hostnames as HOLD. Never enable paid billing just to run this workflow; watch both providers' dashboards for quota changes.
+AI suggestions are **not** added to the candidate database: they are report-only, remain unverified report-only suggestions, and require independent first-party documentation review. The deterministic scanner separately stages only documented hostnames as RESEARCH-stage candidates. Never enable paid billing just to run this workflow; watch both providers' dashboards for quota changes.
 
 ### Verified free-tier budgeting (September 2026)
 
-Tavily Researcher includes 1,000 free credits per calendar month. Basic search costs 1 credit; advanced costs 2. This pilot performs 24 **basic** searches per day, maximum 744 in a 31-day month, leaving 256 credits for safety. If this key is shared with other projects, reduce the daily budget accordingly. Do not upgrade or enable pay-as-you-go. Tavily resets on the first of each month.
+Tavily Researcher includes 1,000 free credits per calendar month. Basic search costs 1 credit; advanced costs 2. This workflow is capped at 8 **basic** searches per day, maximum 248 in a 31-day month, before any provider-side quota failures. If this key is shared with other projects, reduce the daily budget accordingly. Do not upgrade or enable pay-as-you-go. Tavily resets on the first of each month.
 
-Gemini 3.1 Flash-Lite is listed with free-tier text usage, but per-project request/day and token limits vary; inspect the actual project in Google AI Studio. Your AI Studio project shows Gemini 3.1 Flash-Lite at 15 RPM, 250K TPM and 500 RPD. This workflow schedules 24 analyses/day (744 in a 31-day month), below that project's daily limit; quota may change. Failed or rate-limited calls are logged and must never trigger paid fallback. Gemini's own search grounding is not enabled; Tavily supplies excerpts.
+Gemini 3.1 Flash-Lite is listed with free-tier text usage, but per-project request/day and token limits vary; inspect the actual project in Google AI Studio. Your AI Studio project shows Gemini 3.1 Flash-Lite at 15 RPM, 250K TPM and 500 RPD. This workflow is capped at 8 analyses/day (248 in a 31-day month), below that project's stated daily limit; quota may change. Failed or rate-limited calls are logged and must never trigger paid fallback. Gemini's own search grounding is not enabled; Tavily supplies excerpts.
 
-The initial registry contains three vendors, so 24 search variations/day may overlap. Expand official vendor coverage and deduplicate research results during the pilot before treating search volume as useful discovery.
+The current main registry contains three vendors, so the actual run normally performs three vendor searches/day; the hard cap remains eight. Expand official vendor coverage and deduplicate research results during the pilot before treating search volume as useful discovery.

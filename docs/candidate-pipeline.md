@@ -15,10 +15,14 @@ candidates/candidates.csv
       +--> DNS health report
       |
       v
-human evidence / false-positive review
+automatic bounded false-positive investigation
+      |
+      +--> REVIEW_REQUIRED / INCONCLUSIVE => remain candidate
+      |
+      +--> two-site LIMITED_SMOKE_PASS => draft RC proposal only
       |
       v
-evidence/<batch>.md + rules/rules.csv
+human review + evidence/<batch>.md + rules/rules.csv
       |
       v
 build + validation + isolated enforcement test
@@ -31,7 +35,7 @@ published blocklist
 
 Automation can safely decide whether data is structurally valid and whether a hostname currently resolves. It can also calculate a transparent triage score from recorded evidence/risk fields.
 
-Automation does **not** decide that a candidate is safe to publish.
+Automation does **not** decide that a candidate is safe to publish. It may now prepare a **draft release proposal** for a narrowly eligible research-stage candidate after repeated two-site limited-smoke evidence, but the proposal remains unmerged until explicit maintainer approval.
 
 ## Triage bands
 
@@ -67,4 +71,4 @@ A credible false-positive report takes priority over list growth.
 
 ## Scheduled work
 
-GitHub Actions runs published-rule and candidate DNS health weekly and stores CSV artifacts for 30 days. It does not auto-edit, auto-remove, or auto-publish rules.
+GitHub Actions runs published-rule and candidate DNS health weekly and stores CSV artifacts for 30 days. It does not auto-publish rules. The separate auto-RC workflow may stage an unmerged proposal branch; HOLD/rejected candidates are never auto-proposed and final publication still requires an explicit merge.

@@ -32,6 +32,7 @@ The same 13-rule release was also parsed and enforced successfully in isolated A
 - [Install in Pi-hole](docs/install-pihole.md)
 - [False-positive testing protocol](docs/false-positive-testing.md)
 - [Automated false-positive investigation](docs/automated-false-positive-investigation.md)
+- [Automatic draft release proposals](docs/automatic-release-proposals.md)
 - [Application compatibility test record](docs/application-testing.md)
 - [Platform support status](docs/platform-support.md)
 - [AdGuard Home test record](docs/adguard-home-testing.md)

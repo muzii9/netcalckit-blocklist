@@ -53,13 +53,13 @@ jobs:
           stamp = date.today().isoformat()
           path = Path('evidence') / ('automated-' + stamp + '.md')
           lines = ['# Automated documentation scan — ' + stamp, '',
-                   'Discovery only. Every candidate is HOLD. Exact endpoint purpose, DNS health,',
-                   'compatibility and first-party evidence context require human verification.', '']
+                   'Discovery only. Every new candidate is RESEARCH-stage. Exact endpoint purpose, DNS health,',
+                   'compatibility and first-party evidence context require automated + human verification.', '']
           for item in result['new']:
               lines.extend(['## ' + item['hostname'], '',
                             'Vendor: ' + item['vendor'], '',
                             'Documentation page: ' + item['evidence_url'], '',
-                            'Decision: HOLD; no promotion or release-candidate changes.', ''])
+                            'Decision: RESEARCH stage; never published by this workflow. After merge, the separate auto-RC proposer may investigate it and can only open a DRAFT release proposal.', ''])
           path.write_text('\n'.join(lines) + '\n')
           PY
           echo "changed=true" >> "$GITHUB_OUTPUT"
@@ -76,11 +76,11 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -b "$branch"
           git add candidates/candidates.csv "${{ steps.stage.outputs.evidence }}"
-          git commit -m "Stage documented endpoint discoveries as HOLD"
+          git commit -m "Stage documented endpoint discoveries for research"
           git push origin "$branch"
           gh pr create --draft --base main --head "$branch" \
-            --title "Automated HOLD-only research $(date -u +%F)" \
-            --body "Documentation-text discovery only. All new endpoints are HOLD. Review source context, candidate CI/DNS artifact, and false-positive safety before any promotion. No changes to published rules."
+            --title "Automated research-stage endpoint discoveries $(date -u +%F)" \
+            --body "Documentation-text discovery only. New endpoints are RESEARCH-stage candidates, never published by this workflow. Review source context and candidate CI/DNS. Once this research PR is explicitly merged, the separate automatic RC proposer may run bounded false-positive tests and, only with strong evidence, open a DRAFT release proposal requiring another explicit merge. No changes to published rules here."
       - name: Telegram pilot notification
         if: always()
         env:
@@ -93,7 +93,7 @@ jobs:
             echo "Telegram secrets not configured; notification skipped."
             exit 0
           fi
-          msg="NetCalcKit free research: ${JOB_STATUS}. New HOLD candidates: ${{ steps.stage.outputs.changed == 'true' && 'see draft PR' || 'none or scan failed' }}. Runs: https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          msg="NetCalcKit free research: ${JOB_STATUS}. New research-stage candidates: ${{ steps.stage.outputs.changed == 'true' && 'see draft PR' || 'none or scan failed' }}. Runs: https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
           curl --fail --silent --show-error --retry 2 \
             --data-urlencode "chat_id=$TELEGRAM_CHAT_ID" \
             --data-urlencode "text=$msg" \
