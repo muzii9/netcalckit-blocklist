@@ -19,6 +19,15 @@
         "https://autoevents.simpleanalytics.com/",
         "https://www.simpleanalytics.com/"
       ]
+    },
+    {
+      "vendor": "Pinterest",
+      "host": "ct.pinterest.com",
+      "wait_seconds": 8,
+      "pages": [
+        "https://oddmuse.co.uk/",
+        "https://bydeeaus.com/"
+      ]
     }
   ]
 }

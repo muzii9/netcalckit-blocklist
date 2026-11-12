@@ -27,6 +27,7 @@ cdn.us.heap-api.com,Heap,product_analytics,evidence/sixth-alpha-batch.md,low-mod
 cdn.usefathom.com,Fathom Analytics,web_analytics,evidence/eighth-alpha-batch.md,low-moderate,standard,approved,2026-09-24
 cloudflareinsights.com,Cloudflare Web Analytics,web_analytics,evidence/sixth-alpha-batch.md,low-moderate,standard,approved,2026-09-24
 csxd.contentsquare.net,Contentsquare,cross_domain_tracking,evidence/sixth-alpha-batch.md,moderate,standard,approved,2026-09-24
+ct.pinterest.com,Pinterest,ad_conversion_tracking,evidence/pinterest-conversion-rc.md,moderate,standard,approved,2026-09-26
 d.clarity.ms,Microsoft Clarity,behavioral_analytics,evidence/fourth-alpha-batch.md,moderate,standard,approved,2026-08-30
 dc.ads.linkedin.com,LinkedIn,ad_measurement,evidence/fifth-alpha-batch.md,low-moderate,standard,approved,2026-09-24
 dc.applicationinsights.azure.com,Microsoft Application Insights,application_telemetry,evidence/fourth-alpha-batch.md,moderate,standard,approved,2026-08-30
